@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 public class MainIntro extends Fragment {
 
@@ -28,7 +29,7 @@ public class MainIntro extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_intro, container, false);
-        Button playButton = view.findViewById(R.id.playBtn);
+        ImageView playButton = view.findViewById(R.id.playBtn);
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -36,7 +37,7 @@ public class MainIntro extends Fragment {
             }
         });
 
-        Button exitButton = view.findViewById(R.id.exitBtn);
+        ImageView exitButton = view.findViewById(R.id.exitBtn);
         exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
