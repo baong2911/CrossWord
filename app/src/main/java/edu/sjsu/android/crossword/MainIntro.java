@@ -1,6 +1,7 @@
 package edu.sjsu.android.crossword;
 
 import android.app.Activity;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -30,9 +31,11 @@ public class MainIntro extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_intro, container, false);
         ImageView playButton = view.findViewById(R.id.playBtn);
+        final MediaPlayer mp = MediaPlayer.create(getContext(), R.raw.click);
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mp.start();
                 Navigation.findNavController(view).navigate(R.id.action_mainIntro_to_mainScreen);
             }
         });
@@ -43,6 +46,7 @@ public class MainIntro extends Fragment {
             public void onClick(View view) {
                 Activity activity = getActivity();
                 if (activity != null) {
+                    mp.start();
                     activity.finish();
                 }
             }

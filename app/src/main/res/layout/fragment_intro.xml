@@ -9,8 +9,8 @@
 
     <TextView
         android:id="@+id/textView7"
-        android:layout_width="329dp"
-        android:layout_height="301dp"
+        android:layout_width="334dp"
+        android:layout_height="274dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="60dp"
         android:fontFamily="casual"
@@ -27,7 +27,8 @@
         android:layout_width="175dp"
         android:layout_height="136dp"
         android:layout_marginStart="116dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="4dp"
+        android:soundEffectsEnabled="true"
         android:src="@drawable/play"
         android:text="Play"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,6 +41,7 @@
         android:layout_marginStart="108dp"
         android:layout_marginTop="12dp"
         android:src="@drawable/quit"
+        android:soundEffectsEnabled="true"
         android:text="Exit"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/playBtn" />

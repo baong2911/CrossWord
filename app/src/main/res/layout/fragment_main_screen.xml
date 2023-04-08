@@ -369,8 +369,8 @@
         android:id="@+id/hintBtn"
         android:layout_width="75dp"
         android:layout_height="49dp"
-        android:layout_marginStart="192dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginStart="172dp"
+        android:layout_marginTop="28dp"
         android:text="Hint"
         app:layout_constraintStart_toEndOf="@+id/textView29"
         app:layout_constraintTop_toTopOf="parent" />
