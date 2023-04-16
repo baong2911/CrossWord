@@ -36,7 +36,7 @@ public class MainIntro extends Fragment {
             @Override
             public void onClick(View view) {
                 mp.start();
-                Navigation.findNavController(view).navigate(R.id.action_mainIntro_to_mainScreen);
+                Navigation.findNavController(view).navigate(R.id.action_mainIntro_to_levelSelection);
             }
         });
 

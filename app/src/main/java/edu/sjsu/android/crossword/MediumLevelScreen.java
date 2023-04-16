@@ -10,10 +10,10 @@ import android.view.ViewGroup;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link MainScreen#newInstance} factory method to
+ * Use the {@link MediumLevelScreen#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MainScreen extends Fragment {
+public class MediumLevelScreen extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,7 +24,7 @@ public class MainScreen extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public MainScreen() {
+    public MediumLevelScreen() {
         // Required empty public constructor
     }
 
@@ -37,8 +37,8 @@ public class MainScreen extends Fragment {
      * @return A new instance of fragment MainScreen.
      */
     // TODO: Rename and change types and number of parameters
-    public static MainScreen newInstance(String param1, String param2) {
-        MainScreen fragment = new MainScreen();
+    public static MediumLevelScreen newInstance(String param1, String param2) {
+        MediumLevelScreen fragment = new MediumLevelScreen();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -59,6 +59,6 @@ public class MainScreen extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main_screen, container, false);
+        return inflater.inflate(R.layout.fragment_medium_level, container, false);
     }
 }

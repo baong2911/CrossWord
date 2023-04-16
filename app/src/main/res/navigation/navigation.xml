@@ -10,12 +10,21 @@
         android:label="fragment_intro"
         tools:layout="@layout/fragment_intro" >
         <action
-            android:id="@+id/action_mainIntro_to_mainScreen"
-            app:destination="@id/mainScreen" />
+            android:id="@+id/action_mainIntro_to_levelSelection"
+            app:destination="@id/levelSelection" />
     </fragment>
     <fragment
-        android:id="@+id/mainScreen"
-        android:name="edu.sjsu.android.crossword.MainScreen"
-        android:label="fragment_main_screen2"
-        tools:layout="@layout/fragment_main_screen" />
+        android:id="@+id/levelSelection"
+        android:name="edu.sjsu.android.crossword.LevelSelection"
+        android:label="fragment_level_selection"
+        tools:layout="@layout/fragment_level_selection" >
+        <action
+            android:id="@+id/action_levelSelection_to_mediumLevelScreen"
+            app:destination="@id/mediumLevelScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/mediumLevelScreen"
+        android:name="edu.sjsu.android.crossword.MediumLevelScreen"
+        android:label="fragment_medium_level"
+        tools:layout="@layout/fragment_medium_level" />
 </navigation>
