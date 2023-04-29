@@ -35,13 +35,29 @@ public class LevelSelection extends Fragment {
         TextView medium = view.findViewById(R.id.medium);
         TextView hard = view.findViewById(R.id.hard);
 
-        medium.setOnClickListener(new View.OnClickListener(){
+        View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mp.start();
-                Navigation.findNavController(view).navigate(R.id.action_levelSelection_to_mediumLevelScreen);
+                int destinationId = 0;
+                switch (view.getId()) {
+                    case R.id.easy:
+                        destinationId = R.id.action_levelSelection_to_easyLevelScreen;
+                        break;
+                    case R.id.medium:
+                        destinationId = R.id.action_levelSelection_to_mediumLevelScreen;
+                        break;
+                    case R.id.hard:
+                        destinationId = R.id.action_levelSelection_to_hardLevelScreen;
+                        break;
+                }
+                Navigation.findNavController(view).navigate(destinationId);
             }
-        });
+        };
+
+        easy.setOnClickListener(onClickListener);
+        medium.setOnClickListener(onClickListener);
+        hard.setOnClickListener(onClickListener);
         return view;
     }
 }

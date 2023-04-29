@@ -21,10 +21,26 @@
         <action
             android:id="@+id/action_levelSelection_to_mediumLevelScreen"
             app:destination="@id/mediumLevelScreen" />
+        <action
+            android:id="@+id/action_levelSelection_to_easyLevelScreen"
+            app:destination="@id/easyLevelScreen" />
+        <action
+            android:id="@+id/action_levelSelection_to_hardLevelScreen"
+            app:destination="@id/hardLevelScreen" />
     </fragment>
     <fragment
         android:id="@+id/mediumLevelScreen"
         android:name="edu.sjsu.android.crossword.MediumLevelScreen"
         android:label="fragment_medium_level"
-        tools:layout="@layout/fragment_medium_level" />
+        tools:layout="@layout/fragment_medium_level_screen" />
+    <fragment
+        android:id="@+id/easyLevelScreen"
+        android:name="edu.sjsu.android.crossword.EasyLevelScreen"
+        android:label="fragment_easy_level_screen"
+        tools:layout="@layout/fragment_easy_level_screen" />
+    <fragment
+        android:id="@+id/hardLevelScreen"
+        android:name="edu.sjsu.android.crossword.HardLevelScreen"
+        android:label="fragment_hard_level_screen"
+        tools:layout="@layout/fragment_hard_level_screen" />
 </navigation>

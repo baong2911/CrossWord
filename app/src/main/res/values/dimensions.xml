@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="cell">40dp</dimen>
+    <dimen name="hard_level_cell" >30dp</dimen>
     <dimen name="cell_margin">1dp</dimen>
     <dimen name="letter_box_size">40dp</dimen>
     <dimen name="letter_size">20dp</dimen>
