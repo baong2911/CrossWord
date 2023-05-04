@@ -89,7 +89,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView29">
+        app:layout_constraintTop_toBottomOf="@+id/m_score">
 
         <TextView
             android:id="@+id/h_8_1"
@@ -323,7 +323,7 @@
     </GridLayout>
 
     <TextView
-        android:id="@+id/textView29"
+        android:id="@+id/m_score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="52dp"
@@ -336,7 +336,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/guessInput"
+        android:id="@+id/guessInput_m"
         android:layout_width="172dp"
         android:layout_height="42dp"
         android:layout_marginStart="20dp"
@@ -355,7 +355,7 @@
         android:text="Submit"
         android:textSize="10sp"
         app:layout_constraintStart_toEndOf="@+id/h_E"
-        app:layout_constraintTop_toBottomOf="@+id/guessInput" />
+        app:layout_constraintTop_toBottomOf="@+id/guessInput_m" />
 
     <Button
         android:id="@+id/hintBtn"
@@ -364,11 +364,11 @@
         android:layout_marginStart="172dp"
         android:layout_marginTop="28dp"
         android:text="Hint"
-        app:layout_constraintStart_toEndOf="@+id/textView29"
+        app:layout_constraintStart_toEndOf="@+id/m_score"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/h_A"
+        android:id="@+id/m_A"
         android:layout_width="@dimen/letter_box_size"
         android:layout_height="@dimen/letter_box_size"
         android:layout_marginStart="25dp"
