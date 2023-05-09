@@ -52,7 +52,6 @@ public class EasyLevelScreen extends Fragment {
         if (getArguments() != null) {
 
         }
-
     }   
 
     @Override
@@ -82,8 +81,10 @@ public class EasyLevelScreen extends Fragment {
             }
 
             public void onFinish() {
-                // The timer has finished
-                // Perform any actions needed here, such as ending the level
+                TimeOutFragment dialogFragment = new TimeOutFragment();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+
+                dialogFragment.show(fragmentManager, "TimeOutFragment");
             }
         };
         timer.start();

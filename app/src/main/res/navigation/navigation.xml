@@ -45,6 +45,9 @@
         <action
             android:id="@+id/action_easyLevelScreen_to_levelSelection"
             app:destination="@id/levelSelection" />
+        <action
+            android:id="@+id/action_easyLevelScreen_self"
+            app:destination="@id/easyLevelScreen" />
     </fragment>
     <fragment
         android:id="@+id/hardLevelScreen"
