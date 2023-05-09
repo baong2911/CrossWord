@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.os.CountDownTimer;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -29,6 +30,7 @@ public class EasyLevelScreen extends Fragment {
     int correctAnswerSubmitted = 0;
     int score = 0;
 
+    private CountDownTimer timer;
 
     String[] correctWords = {"BLUR", "BURL", "SLUR", "RUB", "BUS"};
 
@@ -50,6 +52,7 @@ public class EasyLevelScreen extends Fragment {
         if (getArguments() != null) {
 
         }
+
     }   
 
     @Override
@@ -59,6 +62,8 @@ public class EasyLevelScreen extends Fragment {
 
         final MediaPlayer mp = MediaPlayer.create(getContext(), R.raw.bingo);
         final MediaPlayer complete = MediaPlayer.create(getContext(), R.raw.complete);
+        final MediaPlayer wrong = MediaPlayer.create(getContext(), R.raw.wrong_answer);
+        final MediaPlayer contain = MediaPlayer.create(getContext(), R.raw.error_sound);
         TextView letterR = view.findViewById(R.id.e_R);
         TextView letterU = view.findViewById(R.id.e_U);
         TextView letterL = view.findViewById(R.id.e_L);
@@ -67,6 +72,21 @@ public class EasyLevelScreen extends Fragment {
         TextView guessInput = view.findViewById(R.id.guessInput_e);
         Button submitButton = view.findViewById(R.id.submitBtn_e);
         TextView e_score = view.findViewById(R.id.e_score);
+        TextView timerTextView = view.findViewById(R.id.e_timer);
+
+        timer = new CountDownTimer(120000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                // Update the timer display with the remaining time
+                timerTextView.setText("Time: " + millisUntilFinished / 1000);
+            }
+
+            public void onFinish() {
+                // The timer has finished
+                // Perform any actions needed here, such as ending the level
+            }
+        };
+        timer.start();
 
         View.OnClickListener letterClickListener = new View.OnClickListener() {
             @Override
@@ -114,11 +134,11 @@ public class EasyLevelScreen extends Fragment {
 
                     if (correctIndex != -1){
                         mp.start();
-                        score += 150;
+                        int remainingTime = Integer.parseInt(timerTextView.getText().toString().substring(6));
+                        score += remainingTime * 10;
                         e_score.setText("Score : " + score);
                         switch (correctWords[correctIndex]){
                             case "BLUR":
-
                                 updateTextView(e2_1, "B");
                                 updateTextView(e2_2, "L");
                                 updateTextView(e1_2, "U");
@@ -150,6 +170,7 @@ public class EasyLevelScreen extends Fragment {
                         }
                         if (correctAnswerSubmitted == correctWords.length){
                             complete.start();
+                            timer.cancel();
                             ScoreFragment scoreFragment = new ScoreFragment();
                             // Set any data that you want to pass to the fragment using arguments
                             Bundle args = new Bundle();
@@ -159,13 +180,16 @@ public class EasyLevelScreen extends Fragment {
                             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                             scoreFragment.show(fragmentManager, "score");
                         }
+                    } else {
+                        wrong.start();
                     }
+                } else {
+                    contain.start();
                 }
                 guessInput.setText("");
                 selectedLetters = new StringBuilder("");
             }
         });
-
 
         return view;
     }
