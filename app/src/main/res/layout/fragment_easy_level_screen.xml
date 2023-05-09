@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
+    android:layout_gravity="center"
     tools:context=".EasyLevelScreen">
 
     <TextView
@@ -232,32 +233,36 @@
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/hintBtn"
+        app:layout_constraintHorizontal_bias="0.794"
+        app:layout_constraintStart_toEndOf="@+id/e_timer"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/guessInput_e"
-        android:layout_width="172dp"
-        android:layout_height="42dp"
+        android:layout_width="170dp"
+        android:layout_height="40dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="28dp"
+        android:layout_marginEnd="20dp"
         android:background="@drawable/cell_border"
         android:gravity="center"
         android:textColor="@color/black"
         android:textSize="25dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/e_L"
         app:layout_constraintTop_toBottomOf="@+id/gridLayout" />
 
     <Button
         android:id="@+id/submitBtn_e"
         android:layout_width="80dp"
         android:layout_height="30dp"
-        android:layout_marginStart="128dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="64dp"
         android:background="@color/yellow"
         android:text="Submit"
         android:textSize="10sp"
-        app:layout_constraintStart_toEndOf="@+id/e_S"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/guessInput_e" />
 
     <TextView
