@@ -347,7 +347,7 @@
         app:layout_constraintTop_toBottomOf="@+id/gridLayout" />
 
     <Button
-        android:id="@+id/submitBtn"
+        android:id="@+id/submitBtn_m"
         android:layout_width="82dp"
         android:layout_height="40dp"
         android:layout_marginTop="8dp"
@@ -381,6 +381,18 @@
         android:textSize="@dimen/letter_size"
         app:layout_constraintStart_toEndOf="@+id/m_T"
         app:layout_constraintTop_toBottomOf="@+id/gridLayout" />
+
+    <TextView
+        android:id="@+id/m_timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
