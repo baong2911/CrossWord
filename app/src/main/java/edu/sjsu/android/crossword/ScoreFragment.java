@@ -40,9 +40,15 @@ public class ScoreFragment extends DialogFragment {
             public void onClick(View view) {
                 mp.start();
                 NavController navController = NavHostFragment.findNavController(ScoreFragment.this);
-                // Navigate to the destination
                 dismiss();
-                navController.navigate(R.id.action_easyLevelScreen_to_levelSelection);
+                int destinationId = navController.getCurrentDestination().getId();
+                if (destinationId == R.id.easyLevelScreen){
+                    navController.navigate(R.id.action_easyLevelScreen_to_levelSelection);
+                } else if (destinationId == R.id.mediumLevelScreen) {
+                    navController.navigate(R.id.action_mediumLevelScreen_to_levelSelection);
+                } else {
+                    navController.navigate(R.id.action_hardLevelScreen_to_levelSelection);
+                }
             }
         });
         return view;

@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="400dp"
     android:layout_height="match_parent"
     android:background="@drawable/background"
     android:layout_gravity="center"
@@ -10,9 +10,9 @@
 
     <TextView
         android:id="@+id/textView7"
-        android:layout_width="334dp"
-        android:layout_height="274dp"
-        android:layout_marginTop="48dp"
+        android:layout_width="350dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="50dp"
         android:fontFamily="casual"
         android:gravity="center"
         android:text="Welcome to Crossword"
@@ -26,7 +26,7 @@
     <ImageView
         android:id="@+id/playBtn"
         android:layout_width="175dp"
-        android:layout_height="136dp"
+        android:layout_height="130dp"
         android:layout_marginTop="4dp"
         android:scaleType="fitCenter"
         android:soundEffectsEnabled="true"
@@ -38,8 +38,8 @@
 
     <ImageView
         android:id="@+id/exitBtn"
-        android:layout_width="188dp"
-        android:layout_height="97dp"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
         android:layout_marginTop="12dp"
         android:scaleType="fitCenter"
         android:soundEffectsEnabled="true"

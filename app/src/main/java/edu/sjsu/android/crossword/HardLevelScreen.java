@@ -39,8 +39,6 @@ public class HardLevelScreen extends Fragment {
     public HardLevelScreen() {
         // Required empty public constructor
     }
-
-    // TODO: Rename and change types and number of parameters
     public static HardLevelScreen newInstance(String param1, String param2) {
         HardLevelScreen fragment = new HardLevelScreen();
         Bundle args = new Bundle();
@@ -283,6 +281,6 @@ public class HardLevelScreen extends Fragment {
         textView.setTextSize(15); // set text size to 20sp
         textView.setGravity(Gravity.CENTER); // center text horizontally and vertical
         textView.setTypeface(Typeface.DEFAULT_BOLD);
-        textView.setTextColor(Color.BLACK);
+        textView.setBackgroundResource(R.drawable.correct_border);
     }
 }

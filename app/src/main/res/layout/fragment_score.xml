@@ -5,16 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ScoreFragment"
-    android:background="@drawable/background">
+    android:background="@color/white">
 
     <TextView
         android:id="@+id/congratuation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="15dp"
         android:text="Congratuation!"
-        android:textSize="30dp"
+        android:textColor="@color/black"
+        android:textSize="35dp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -22,10 +24,12 @@
         android:id="@+id/scoreTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="76dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="75dp"
+        android:layout_marginTop="15dp"
         android:text="Your Score: "
         android:textSize="20dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/congratuation" />
 
@@ -33,10 +37,11 @@
         android:id="@+id/choice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="15dp"
         android:text="Choose a different Level"
         android:textSize="20dp"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scoreTextView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

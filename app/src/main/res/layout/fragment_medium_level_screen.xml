@@ -3,8 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="400dp"
     android:layout_height="match_parent"
+    android:layout_gravity="center"
     android:background="@drawable/background"
     tools:context=".MediumLevelScreen">
 
@@ -14,9 +15,10 @@
         android:layout_height="@dimen/letter_box_size"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
-        android:background="#FFC107"
+        android:background="@drawable/letter_border"
         android:gravity="center"
         android:text="H"
+        android:textStyle="bold"
         android:textColor="@color/black"
         android:textSize="@dimen/letter_size"
         app:layout_constraintStart_toEndOf="@+id/m_R"
@@ -28,9 +30,10 @@
         android:layout_height="@dimen/letter_box_size"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
-        android:background="@color/yellow"
+        android:background="@drawable/letter_border"
         android:gravity="center"
         android:text="C"
+        android:textStyle="bold"
         android:textColor="@color/black"
         android:textSize="@dimen/letter_size"
         app:layout_constraintStart_toEndOf="@+id/m_H"
@@ -40,11 +43,12 @@
         android:id="@+id/m_R"
         android:layout_width="@dimen/letter_box_size"
         android:layout_height="@dimen/letter_box_size"
-        android:layout_marginStart="30dp"
+        android:layout_marginStart="25dp"
         android:layout_marginTop="10dp"
-        android:background="#9C27B0"
+        android:background="@drawable/letter_border"
         android:gravity="center"
         android:text="R"
+        android:textStyle="bold"
         android:textColor="@color/black"
         android:textSize="@dimen/letter_size"
         app:layout_constraintStart_toStartOf="parent"
@@ -54,11 +58,12 @@
         android:id="@+id/m_T"
         android:layout_width="@dimen/letter_box_size"
         android:layout_height="@dimen/letter_box_size"
-        android:layout_marginStart="30dp"
+        android:layout_marginStart="25dp"
         android:layout_marginTop="30dp"
-        android:background="@color/teal_700"
+        android:background="@drawable/letter_border"
         android:gravity="center"
         android:text="T"
+        android:textStyle="bold"
         android:textColor="@color/black"
         android:textSize="@dimen/letter_size"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,9 +75,10 @@
         android:layout_height="@dimen/letter_box_size"
         android:layout_marginStart="20dp"
         android:layout_marginTop="30dp"
-        android:background="@color/purple_200"
+        android:background="@drawable/letter_border"
         android:gravity="center"
         android:text="B"
+        android:textStyle="bold"
         android:textColor="@color/black"
         android:textSize="@dimen/letter_size"
         app:layout_constraintStart_toEndOf="@+id/m_A"
@@ -80,14 +86,14 @@
 
     <GridLayout
         android:id="@+id/gridLayout"
-        android:layout_width="344dp"
-        android:layout_height="351dp"
-        android:layout_marginTop="24dp"
+        android:layout_width="350dp"
+        android:layout_height="340dp"
+        android:layout_marginTop="25dp"
         android:columnCount="8"
         android:rowCount="8"
-        android:useDefaultMargins="false"
+        android:useDefaultMargins="true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/m_score">
 
@@ -147,6 +153,7 @@
             android:layout_height="@dimen/cell"
             android:layout_row="6"
             android:layout_column="5"
+            android:layout_gravity="center_vertical"
             android:layout_margin="@dimen/cell_margin"
             android:background="@drawable/cell_border"
             android:text="" />
@@ -167,6 +174,7 @@
             android:layout_height="@dimen/cell"
             android:layout_row="4"
             android:layout_column="0"
+            android:layout_gravity="center_vertical"
             android:layout_margin="@dimen/cell_margin"
             android:background="@drawable/cell_border"
             android:text="4" />
@@ -197,6 +205,7 @@
             android:layout_height="@dimen/cell"
             android:layout_row="5"
             android:layout_column="1"
+            android:layout_gravity="center_vertical"
             android:layout_margin="@dimen/cell_margin"
             android:background="@drawable/cell_border"
             android:text="" />
@@ -207,6 +216,7 @@
             android:layout_height="@dimen/cell"
             android:layout_row="5"
             android:layout_column="3"
+            android:layout_gravity="center_vertical"
             android:layout_margin="@dimen/cell_margin"
             android:background="@drawable/cell_border"
             android:text="5" />
@@ -217,6 +227,7 @@
             android:layout_height="@dimen/cell"
             android:layout_row="2"
             android:layout_column="7"
+            android:layout_gravity="center_vertical"
             android:layout_margin="@dimen/cell_margin"
             android:background="@drawable/cell_border"
             android:text="" />
@@ -227,6 +238,7 @@
             android:layout_height="@dimen/cell"
             android:layout_row="4"
             android:layout_column="3"
+            android:layout_gravity="center_vertical"
             android:layout_margin="@dimen/cell_margin"
             android:background="@drawable/cell_border"
             android:text="" />
@@ -237,6 +249,7 @@
             android:layout_height="@dimen/cell"
             android:layout_row="4"
             android:layout_column="1"
+            android:layout_gravity="center_vertical"
             android:layout_margin="@dimen/cell_margin"
             android:background="@drawable/cell_border"
             android:text="" />
@@ -257,6 +270,7 @@
             android:layout_height="@dimen/cell"
             android:layout_row="2"
             android:layout_column="3"
+            android:layout_gravity="center_vertical"
             android:layout_margin="@dimen/cell_margin"
             android:background="@drawable/cell_border"
             android:text="3" />
@@ -267,6 +281,7 @@
             android:layout_height="@dimen/cell"
             android:layout_row="3"
             android:layout_column="3"
+            android:layout_gravity="center_vertical"
             android:layout_margin="@dimen/cell_margin"
             android:background="@drawable/cell_border"
             android:text="" />
@@ -278,6 +293,7 @@
             android:layout_row="2"
             android:layout_column="5"
             android:layout_margin="@dimen/cell_margin"
+            android:layout_gravity="center_vertical"
             android:background="@drawable/cell_border"
             android:text="" />
 
@@ -288,6 +304,7 @@
             android:layout_row="2"
             android:layout_column="4"
             android:layout_margin="@dimen/cell_margin"
+            android:layout_gravity="center_vertical"
             android:background="@drawable/cell_border"
             android:text="" />
 
@@ -298,6 +315,7 @@
             android:layout_row="2"
             android:layout_column="6"
             android:layout_margin="@dimen/cell_margin"
+            android:layout_gravity="center_vertical"
             android:background="@drawable/cell_border"
             android:text="" />
 
@@ -326,45 +344,51 @@
         android:id="@+id/m_score"
         android:layout_width="135dp"
         android:layout_height="30dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
         android:text="Score: 0"
         android:textColor="@color/black"
         android:textSize="20dp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/hintBtn"
+        app:layout_constraintHorizontal_bias="0.746"
+        app:layout_constraintStart_toEndOf="@+id/m_timer"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/guessInput_m"
-        android:layout_width="172dp"
-        android:layout_height="42dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="28dp"
-        android:background="@drawable/cell_border"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="20dp"
+        android:background="@color/white"
         android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="25dp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/m_B"
         app:layout_constraintTop_toBottomOf="@+id/gridLayout" />
 
     <Button
         android:id="@+id/submitBtn_m"
-        android:layout_width="82dp"
+        android:layout_width="80dp"
         android:layout_height="40dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="72dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="56dp"
         android:text="Submit"
+        android:background="@drawable/buttons"
         android:textSize="10sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/guessInput_m" />
 
     <TextView
         android:id="@+id/hintBtn"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="30dp"
         android:background="@drawable/help"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -374,9 +398,10 @@
         android:layout_height="@dimen/letter_box_size"
         android:layout_marginStart="20dp"
         android:layout_marginTop="30dp"
-        android:background="@color/teal_200"
+        android:background="@drawable/letter_border"
         android:gravity="center"
         android:text="A"
+        android:textStyle="bold"
         android:textColor="@color/black"
         android:textSize="@dimen/letter_size"
         app:layout_constraintStart_toEndOf="@+id/m_T"
@@ -393,6 +418,16 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/delete"
+        android:layout_width="@dimen/letter_box_size"
+        android:layout_height="@dimen/letter_box_size"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/delete_foreground"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/m_R" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

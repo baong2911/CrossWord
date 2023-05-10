@@ -72,6 +72,7 @@ public class EasyLevelScreen extends Fragment {
         Button submitButton = view.findViewById(R.id.submitBtn_e);
         TextView e_score = view.findViewById(R.id.e_score);
         TextView timerTextView = view.findViewById(R.id.e_timer);
+        TextView delete = view.findViewById(R.id.delete);
 
         timer = new CountDownTimer(120000, 1000) {
 
@@ -118,6 +119,16 @@ public class EasyLevelScreen extends Fragment {
         TextView e5_1 = view.findViewById(R.id.e_5_1);
         TextView e5_2 = view.findViewById(R.id.e_5_2);
         TextView e5_3 = view.findViewById(R.id.e_5_3);
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                if (selectedLetters.length() >0){
+                    selectedLetters.deleteCharAt(selectedLetters.length()-1);
+                    guessInput.setText(selectedLetters.toString());
+                }
+            }
+        });
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -208,6 +219,6 @@ public class EasyLevelScreen extends Fragment {
         textView.setTextSize(15); // set text size to 20sp
         textView.setGravity(Gravity.CENTER); // center text horizontally and vertical
         textView.setTypeface(Typeface.DEFAULT_BOLD);
-        textView.setTextColor(Color.BLACK);
+        textView.setBackgroundResource(R.drawable.correct_border);
     }
 }

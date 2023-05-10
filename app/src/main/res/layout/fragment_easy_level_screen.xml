@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="400dp"
     android:layout_height="match_parent"
     android:background="@drawable/background"
     android:layout_gravity="center"
@@ -16,7 +16,8 @@
         android:layout_marginTop="10dp"
         android:text="B"
         android:textColor="@color/black"
-        android:background="@color/yellow"
+        android:textStyle="bold"
+        android:background="@drawable/letter_border"
         android:textSize="@dimen/letter_size"
         android:gravity="center"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,8 +30,9 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:text="S"
-        android:background="#9C27B0"
         android:textColor="@color/black"
+        android:textStyle="bold"
+        android:background="@drawable/letter_border"
         android:textSize="@dimen/letter_size"
         android:gravity="center"
         app:layout_constraintStart_toEndOf="@+id/e_B"
@@ -42,10 +44,11 @@
         android:layout_height="@dimen/letter_box_size"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:background="@color/teal_700"
         android:gravity="center"
         android:text="L"
         android:textColor="@color/black"
+        android:textStyle="bold"
+        android:background="@drawable/letter_border"
         android:textSize="@dimen/letter_size"
         app:layout_constraintStart_toEndOf="@+id/e_U"
         app:layout_constraintTop_toBottomOf="@+id/gridLayout" />
@@ -58,7 +61,8 @@
         android:layout_marginTop="20dp"
         android:text="U"
         android:textColor="@color/black"
-        android:background="@color/purple_200"
+        android:textStyle="bold"
+        android:background="@drawable/letter_border"
         android:textSize="@dimen/letter_size"
         android:gravity="center"
         app:layout_constraintStart_toEndOf="@+id/e_R"
@@ -71,6 +75,7 @@
         android:layout_marginTop="25dp"
         android:columnCount="8"
         android:rowCount="8"
+        android:useDefaultMargins="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/e_score">
@@ -81,9 +86,9 @@
             android:layout_height="@dimen/cell"
             android:layout_row="5"
             android:layout_column="6"
+            android:layout_gravity="center_vertical"
             android:layout_margin="@dimen/cell_margin"
             android:background="@drawable/cell_border"
-            android:layout_gravity="center_vertical"
             android:text="" />
 
         <TextView
@@ -101,10 +106,9 @@
             android:layout_height="@dimen/cell"
             android:layout_row="3"
             android:layout_column="5"
-            android:layout_margin="@dimen/cell_margin"
-            android:background="@drawable/cell_border"
             android:layout_gravity="center"
-            android:text="4" />
+            android:layout_margin="@dimen/cell_margin"
+            android:background="@drawable/cell_border" />
 
         <TextView
             android:id="@+id/e_2_1"
@@ -113,8 +117,7 @@
             android:layout_row="1"
             android:layout_column="1"
             android:layout_margin="@dimen/cell_margin"
-            android:background="@drawable/cell_border"
-            android:text="2" />
+            android:background="@drawable/cell_border" />
 
         <TextView
             android:id="@+id/e_5_1"
@@ -122,10 +125,9 @@
             android:layout_height="@dimen/cell"
             android:layout_row="5"
             android:layout_column="5"
-            android:layout_margin="@dimen/cell_margin"
-            android:background="@drawable/cell_border"
             android:layout_gravity="center_vertical"
-            android:text="5" />
+            android:layout_margin="@dimen/cell_margin"
+            android:background="@drawable/cell_border" />
 
         <TextView
             android:id="@+id/e_4_2"
@@ -133,9 +135,9 @@
             android:layout_height="@dimen/cell"
             android:layout_row="4"
             android:layout_column="5"
+            android:layout_gravity="center"
             android:layout_margin="@dimen/cell_margin"
             android:background="@drawable/cell_border"
-            android:layout_gravity="center"
             android:text="" />
 
         <TextView
@@ -144,9 +146,9 @@
             android:layout_height="@dimen/cell"
             android:layout_row="3"
             android:layout_column="3"
+            android:layout_gravity="center_vertical"
             android:layout_margin="@dimen/cell_margin"
             android:background="@drawable/cell_border"
-            android:layout_gravity="center_vertical"
             android:text="" />
 
         <TextView
@@ -156,8 +158,7 @@
             android:layout_row="3"
             android:layout_column="2"
             android:layout_margin="@dimen/cell_margin"
-            android:background="@drawable/cell_border"
-            android:text="3" />
+            android:background="@drawable/cell_border" />
 
         <TextView
             android:id="@+id/e_2_2"
@@ -195,9 +196,9 @@
             android:layout_height="@dimen/cell"
             android:layout_row="3"
             android:layout_column="4"
+            android:layout_gravity="center"
             android:layout_margin="@dimen/cell_margin"
             android:background="@drawable/cell_border"
-            android:layout_gravity="center"
             android:text="" />
 
         <TextView
@@ -207,8 +208,7 @@
             android:layout_row="0"
             android:layout_column="3"
             android:layout_margin="@dimen/cell_margin"
-            android:background="@drawable/cell_border"
-            android:text="1" />
+            android:background="@drawable/cell_border" />
 
         <TextView
             android:id="@+id/e_1_2"
@@ -216,8 +216,8 @@
             android:layout_height="@dimen/cell"
             android:layout_row="1"
             android:layout_column="3"
-            android:layout_margin="@dimen/cell_margin"
             android:layout_gravity="center_vertical"
+            android:layout_margin="@dimen/cell_margin"
             android:background="@drawable/cell_border"
             android:text="" />
     </GridLayout>
@@ -239,36 +239,40 @@
 
     <TextView
         android:id="@+id/guessInput_e"
-        android:layout_width="170dp"
+        android:layout_width="150dp"
         android:layout_height="40dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
-        android:background="@drawable/cell_border"
+        android:background="@color/white"
         android:gravity="center"
         android:textColor="@color/black"
         android:textSize="25dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.833"
         app:layout_constraintStart_toEndOf="@+id/e_L"
         app:layout_constraintTop_toBottomOf="@+id/gridLayout" />
 
     <Button
         android:id="@+id/submitBtn_e"
         android:layout_width="80dp"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="64dp"
-        android:background="@color/yellow"
+        android:layout_marginEnd="60dp"
+        android:background="@drawable/buttons"
+        android:gravity="center"
         android:text="Submit"
+        android:textAlignment="center"
         android:textSize="10sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/delete"
         app:layout_constraintTop_toBottomOf="@+id/guessInput_e" />
 
     <TextView
         android:id="@+id/hintBtn"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="30dp"
         android:background="@drawable/help"
@@ -282,7 +286,8 @@
         android:layout_marginStart="25dp"
         android:layout_marginTop="20dp"
         android:text="R"
-        android:background="@color/teal_200"
+        android:textStyle="bold"
+        android:background="@drawable/letter_border"
         android:textColor="@color/black"
         android:textSize="@dimen/letter_size"
         android:gravity="center"
@@ -300,6 +305,16 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/delete"
+        android:layout_width="@dimen/letter_box_size"
+        android:layout_height="@dimen/letter_box_size"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/delete_foreground"
+        app:layout_constraintStart_toEndOf="@+id/e_S"
+        app:layout_constraintTop_toBottomOf="@+id/e_L" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

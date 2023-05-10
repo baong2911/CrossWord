@@ -19,11 +19,6 @@ import android.widget.TextView;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link MediumLevelScreen#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class MediumLevelScreen extends Fragment {
 
     private StringBuilder selectedLetters = new StringBuilder();
@@ -73,6 +68,7 @@ public class MediumLevelScreen extends Fragment {
         Button submitButton = view.findViewById(R.id.submitBtn_m);
         TextView e_score = view.findViewById(R.id.m_score);
         TextView timerTextView = view.findViewById(R.id.m_timer);
+        TextView delete = view.findViewById(R.id.delete);
 
         timer = new CountDownTimer(120000, 1000) {
 
@@ -129,6 +125,15 @@ public class MediumLevelScreen extends Fragment {
         TextView six2 = view.findViewById(R.id.m_6_2);
         TextView six3 = view.findViewById(R.id.m_6_3);
 
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                if (selectedLetters.length() >0){
+                    selectedLetters.deleteCharAt(selectedLetters.length()-1);
+                    guessInput.setText(selectedLetters.toString());
+                }
+            }
+        });
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -232,6 +237,6 @@ public class MediumLevelScreen extends Fragment {
         textView.setTextSize(15); // set text size to 20sp
         textView.setGravity(Gravity.CENTER); // center text horizontally and vertical
         textView.setTypeface(Typeface.DEFAULT_BOLD);
-        textView.setTextColor(Color.BLACK);
+        textView.setBackgroundResource(R.drawable.correct_border);
     }
 }
