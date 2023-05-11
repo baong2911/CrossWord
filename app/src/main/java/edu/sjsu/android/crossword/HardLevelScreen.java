@@ -73,12 +73,13 @@ public class HardLevelScreen extends Fragment {
         TextView guessInput = view.findViewById(R.id.guessInput_h);
         Button submitButton = view.findViewById(R.id.submitBtn_h);
         TextView e_score = view.findViewById(R.id.h_score);
+        TextView delete = view.findViewById(R.id.delete);
         TextView timerTextView = view.findViewById(R.id.h_timer);
         timer = new CountDownTimer(120000, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 // Update the timer display with the remaining time
-                timerTextView.setText("Time: " + millisUntilFinished / 1000);
+                timerTextView.setText("Time:" + millisUntilFinished / 1000);
             }
 
             public void onFinish() {
@@ -97,6 +98,16 @@ public class HardLevelScreen extends Fragment {
                 populateGuessInput(guessInput, letter);
             }
         };
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                if (selectedLetters.length() >0){
+                    selectedLetters.deleteCharAt(selectedLetters.length()-1);
+                    guessInput.setText(selectedLetters.toString());
+                }
+            }
+        });
 
         letterR.setOnClickListener(letterClickListener);
         letterU.setOnClickListener(letterClickListener);

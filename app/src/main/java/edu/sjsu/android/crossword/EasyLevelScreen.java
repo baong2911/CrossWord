@@ -20,11 +20,17 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 public class EasyLevelScreen extends Fragment {
 
+    HashMap<String, String> letterMap = new HashMap<>();
+
+    private int numHintsUsed = 0;
+    CrosswordHelper helper;
     private StringBuilder selectedLetters = new StringBuilder();
     Set<String> submittedAnswers = new HashSet<>();
     int correctAnswerSubmitted = 0;
@@ -33,7 +39,6 @@ public class EasyLevelScreen extends Fragment {
     private CountDownTimer timer;
 
     String[] correctWords = {"BLUR", "BURL", "SLUR", "RUB", "BUS"};
-
 
     public EasyLevelScreen() {
         // Required empty public constructor
@@ -58,9 +63,8 @@ public class EasyLevelScreen extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_easy_level_screen, container, false);
-
+        pupulateHashMap();
         final MediaPlayer mp = MediaPlayer.create(getContext(), R.raw.bingo);
-        final MediaPlayer complete = MediaPlayer.create(getContext(), R.raw.complete);
         final MediaPlayer wrong = MediaPlayer.create(getContext(), R.raw.wrong_answer);
         final MediaPlayer contain = MediaPlayer.create(getContext(), R.raw.error_sound);
         TextView letterR = view.findViewById(R.id.e_R);
@@ -73,12 +77,13 @@ public class EasyLevelScreen extends Fragment {
         TextView e_score = view.findViewById(R.id.e_score);
         TextView timerTextView = view.findViewById(R.id.e_timer);
         TextView delete = view.findViewById(R.id.delete);
+        TextView hintButton = view.findViewById(R.id.hintBtn);
 
         timer = new CountDownTimer(120000, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 // Update the timer display with the remaining time
-                timerTextView.setText("Time: " + millisUntilFinished / 1000);
+                timerTextView.setText("Time:" + millisUntilFinished / 1000);
             }
 
             public void onFinish() {
@@ -90,6 +95,7 @@ public class EasyLevelScreen extends Fragment {
         };
         timer.start();
 
+        helper = new CrosswordHelper(getContext());
         View.OnClickListener letterClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,7 +110,14 @@ public class EasyLevelScreen extends Fragment {
         letterB.setOnClickListener(letterClickListener);
         letterS.setOnClickListener(letterClickListener);
 
+        TextView[] textViews = { view.findViewById(R.id.e_2_1), view.findViewById(R.id.e_2_2), view.findViewById(R.id.e_1_2),
+                view.findViewById(R.id.e_2_4), view.findViewById(R.id.e_1_1), view.findViewById(R.id.e_1_3),
+                view.findViewById(R.id.e_3_1), view.findViewById(R.id.e_3_2), view.findViewById(R.id.e_3_3),
+                view.findViewById(R.id.e_4_1), view.findViewById(R.id.e_4_2), view.findViewById(R.id.e_5_1),
+                view.findViewById(R.id.e_5_2), view.findViewById(R.id.e_5_3) };
+
         TextView e2_1 = view.findViewById(R.id.e_2_1);
+
         TextView e2_2 = view.findViewById(R.id.e_2_2);
         TextView e1_2 = view.findViewById(R.id.e_1_2);
         TextView e2_4 = view.findViewById(R.id.e_2_4);
@@ -129,6 +142,42 @@ public class EasyLevelScreen extends Fragment {
                 }
             }
         });
+
+        hintButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                if (numHintsUsed <3) {
+                    numHintsUsed++;
+                    Random random = new Random();
+                    int randomIndex = random.nextInt(textViews.length);
+                    TextView randomTextView = textViews[randomIndex];
+                    while (!randomTextView.getText().toString().isEmpty()) {
+                        randomIndex = random.nextInt(textViews.length);
+                        randomTextView = textViews[randomIndex];
+                    }
+                    String resourceId = getResources().getResourceEntryName(randomTextView.getId());
+                    String letter = letterMap.get(resourceId);
+                    helper.updateTextView(randomTextView, letter);
+                    if (isCrosswordLevelComplete()) {
+                        getScoreFragment();
+                    }
+
+                    if (numHintsUsed ==3){
+                        hintButton.setEnabled(false);
+                    }
+                }
+            }
+
+            private boolean isCrosswordLevelComplete() {
+                for (TextView textView : textViews) {
+                    if (textView.getText().toString().isEmpty()) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        });
+
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -145,52 +194,45 @@ public class EasyLevelScreen extends Fragment {
                     }
 
                     if (correctIndex != -1){
-                        mp.start();
+                        if (correctAnswerSubmitted != correctWords.length){
+                            mp.start();
+                        }
                         int remainingTime = Integer.parseInt(timerTextView.getText().toString().substring(6));
-                        score += remainingTime * 10;
-                        e_score.setText("Score : " + score);
+                        score += (remainingTime * 20 + guess.length() * 10);
+                        e_score.setText("Score: " + score);
                         switch (correctWords[correctIndex]){
                             case "BLUR":
-                                updateTextView(e2_1, "B");
-                                updateTextView(e2_2, "L");
-                                updateTextView(e1_2, "U");
-                                updateTextView(e2_4, "R");
+                                helper.updateTextView(e2_1, "B");
+                                helper.updateTextView(e2_2, "L");
+                                helper.updateTextView(e1_2, "U");
+                                helper.updateTextView(e2_4, "R");
                                 break;
                             case "BURL":
-                                updateTextView(e1_1, "B");
-                                updateTextView(e1_2, "U");
-                                updateTextView(e1_3, "R");
-                                updateTextView(e3_2, "L");
+                                helper.updateTextView(e1_1, "B");
+                                helper.updateTextView(e1_2, "U");
+                                helper.updateTextView(e1_3, "R");
+                                helper.updateTextView(e3_2, "L");
                                 break;
                             case "SLUR":
-                                updateTextView(e3_1, "S");
-                                updateTextView(e3_2, "L");
-                                updateTextView(e3_3, "U");
-                                updateTextView(e4_1, "R");
+                                helper.updateTextView(e3_1, "S");
+                                helper.updateTextView(e3_2, "L");
+                                helper.updateTextView(e3_3, "U");
+                                helper.updateTextView(e4_1, "R");
                                 break;
                             case "RUB":
-                                updateTextView(e4_1, "R");
-                                updateTextView(e4_2, "U");
-                                updateTextView(e5_1, "B");
+                                helper.updateTextView(e4_1, "R");
+                                helper.updateTextView(e4_2, "U");
+                                helper.updateTextView(e5_1, "B");
                                 break;
                             case "BUS":
-                                updateTextView(e5_1, "B");
-                                updateTextView(e5_2, "U");
-                                updateTextView(e5_3, "S");
+                                helper.updateTextView(e5_1, "B");
+                                helper.updateTextView(e5_2, "U");
+                                helper.updateTextView(e5_3, "S");
                                 break;
 
                         }
                         if (correctAnswerSubmitted == correctWords.length){
-                            complete.start();
-                            timer.cancel();
-                            ScoreFragment scoreFragment = new ScoreFragment();
-                            // Set any data that you want to pass to the fragment using arguments
-                            Bundle args = new Bundle();
-                            args.putInt("score", score);
-                            scoreFragment.setArguments(args);
-                            // Show the fragment using the FragmentManager
-                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                            scoreFragment.show(fragmentManager, "score");
+                            getScoreFragment();
                         }
                     } else {
                         wrong.start();
@@ -206,19 +248,33 @@ public class EasyLevelScreen extends Fragment {
         return view;
     }
 
+    private void pupulateHashMap() {
+        letterMap.put("e_1_1","B");
+        letterMap.put("e_1_2","U");
+        letterMap.put("e_1_3","R");
+        letterMap.put("e_3_2","L");
+        letterMap.put("e_2_1","B");
+        letterMap.put("e_2_2","L");
+        letterMap.put("e_2_4","R");
+        letterMap.put("e_3_1","S");
+        letterMap.put("e_3_3","U");
+        letterMap.put("e_4_1","R");
+        letterMap.put("e_4_2","U");
+        letterMap.put("e_5_1","B");
+        letterMap.put("e_5_2","U");
+        letterMap.put("e_5_3","L");
+    }
+
     private void populateGuessInput(TextView guessInput, String letter) {
         // Append the selected letter to the StringBuilder
         selectedLetters.append(letter);
-
         // Set the text of the guessInput TextView to the current selection
         guessInput.setText(selectedLetters.toString());
     }
 
-    private void updateTextView(TextView textView, String text) {
-        textView.setText(text);
-        textView.setTextSize(15); // set text size to 20sp
-        textView.setGravity(Gravity.CENTER); // center text horizontally and vertical
-        textView.setTypeface(Typeface.DEFAULT_BOLD);
-        textView.setBackgroundResource(R.drawable.correct_border);
+    private void getScoreFragment(){
+        timer.cancel();
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        helper.showScoreFragment(fragmentManager, score);
     }
 }

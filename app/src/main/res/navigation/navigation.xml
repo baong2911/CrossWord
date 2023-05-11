@@ -11,6 +11,8 @@
         tools:layout="@layout/fragment_intro" >
         <action
             android:id="@+id/action_mainIntro_to_levelSelection"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
             app:destination="@id/levelSelection" />
     </fragment>
     <fragment
@@ -20,12 +22,18 @@
         tools:layout="@layout/fragment_level_selection" >
         <action
             android:id="@+id/action_levelSelection_to_mediumLevelScreen"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
             app:destination="@id/mediumLevelScreen" />
         <action
             android:id="@+id/action_levelSelection_to_easyLevelScreen"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
             app:destination="@id/easyLevelScreen" />
         <action
             android:id="@+id/action_levelSelection_to_hardLevelScreen"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
             app:destination="@id/hardLevelScreen" />
     </fragment>
     <fragment
@@ -35,6 +43,8 @@
         tools:layout="@layout/fragment_medium_level_screen" >
         <action
             android:id="@+id/action_mediumLevelScreen_to_levelSelection"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
             app:destination="@id/levelSelection" />
     </fragment>
     <fragment
@@ -44,9 +54,13 @@
         tools:layout="@layout/fragment_easy_level_screen" >
         <action
             android:id="@+id/action_easyLevelScreen_to_levelSelection"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
             app:destination="@id/levelSelection" />
         <action
             android:id="@+id/action_easyLevelScreen_self"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
             app:destination="@id/easyLevelScreen" />
     </fragment>
     <fragment
@@ -56,6 +70,8 @@
         tools:layout="@layout/fragment_hard_level_screen" >
         <action
             android:id="@+id/action_hardLevelScreen_to_levelSelection"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
             app:destination="@id/levelSelection" />
     </fragment>
     <fragment

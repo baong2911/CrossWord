@@ -31,9 +31,9 @@ public class ScoreFragment extends DialogFragment {
         int score = getArguments().getInt("score");
         final MediaPlayer mp = MediaPlayer.create(getContext(), R.raw.click);
         // Display the score in the layout
-        TextView scoreTextView = view.findViewById(R.id.scoreTextView);
+        TextView scoreTextView = view.findViewById(R.id.score_board);
         TextView choice = view.findViewById(R.id.choice);
-        scoreTextView.setText("Your Score: " + score);
+        scoreTextView.setText(String.valueOf(score));
         // Set the NavController for the TextView
         choice.setOnClickListener(new View.OnClickListener() {
             @Override

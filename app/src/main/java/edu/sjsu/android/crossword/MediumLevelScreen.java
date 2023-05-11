@@ -26,6 +26,8 @@ public class MediumLevelScreen extends Fragment {
     int correctAnswerSubmitted = 0;
     int score = 0;
 
+    CrosswordHelper helper;
+
     private CountDownTimer timer;
 
     String[] correctWords = {"BATCH", "BRACT", "CHART", "BAT", "CHAT", "CART", "ACT"};
@@ -53,7 +55,7 @@ public class MediumLevelScreen extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_medium_level_screen, container, false);
 
-
+        helper = new CrosswordHelper(getContext());
         final MediaPlayer mp = MediaPlayer.create(getContext(), R.raw.bingo);
         final MediaPlayer complete = MediaPlayer.create(getContext(), R.raw.complete);
         final MediaPlayer wrong = MediaPlayer.create(getContext(), R.raw.wrong_answer);
@@ -74,7 +76,7 @@ public class MediumLevelScreen extends Fragment {
 
             public void onTick(long millisUntilFinished) {
                 // Update the timer display with the remaining time
-                timerTextView.setText("Time: " + millisUntilFinished / 1000);
+                timerTextView.setText("Time:" + millisUntilFinished / 1000);
             }
 
             public void onFinish() {
@@ -150,66 +152,59 @@ public class MediumLevelScreen extends Fragment {
                     }
 
                     if (correctIndex != -1){
-                        mp.start();
+                        if (correctAnswerSubmitted != correctWords.length){
+                            mp.start();
+                        }
                         int remainingTime = Integer.parseInt(timerTextView.getText().toString().substring(6));
-                        score += remainingTime * 10;
+                        score += (remainingTime * 10 + guess.length() * 10);
                         e_score.setText("Score : " + score);
                         switch (correctWords[correctIndex]){
                             case "BAT":
-                                updateTextView(one1, "B");
-                                updateTextView(one2, "A");
-                                updateTextView(one3, "T");
+                                helper.updateTextView(one1, "B");
+                                helper.updateTextView(one2, "A");
+                                helper.updateTextView(one3, "T");
                                 break;
                             case "CHAT":
-                                updateTextView(two1, "C");
-                                updateTextView(two2, "H");
-                                updateTextView(four2, "A");
-                                updateTextView(two4, "T");
+                                helper.updateTextView(two1, "C");
+                                helper.updateTextView(two2, "H");
+                                helper.updateTextView(four2, "A");
+                                helper.updateTextView(two4, "T");
                                 break;
                             case "BRACT":
-                                updateTextView(three1, "B");
-                                updateTextView(three2, "R");
-                                updateTextView(three3, "A");
-                                updateTextView(three4, "C");
-                                updateTextView(one3, "T");
+                                helper.updateTextView(three1, "B");
+                                helper.updateTextView(three2, "R");
+                                helper.updateTextView(three3, "A");
+                                helper.updateTextView(three4, "C");
+                                helper.updateTextView(one3, "T");
                                 break;
                             case "BATCH":
-                                updateTextView(three1, "B");
-                                updateTextView(three5, "A");
-                                updateTextView(four4, "T");
-                                updateTextView(five1, "C");
-                                updateTextView(three6, "B");
+                                helper.updateTextView(three1, "B");
+                                helper.updateTextView(three5, "A");
+                                helper.updateTextView(four4, "T");
+                                helper.updateTextView(five1, "C");
+                                helper.updateTextView(three6, "B");
                                 break;
                             case "CART":
-                                updateTextView(four1, "C");
-                                updateTextView(four2, "A");
-                                updateTextView(four3, "R");
-                                updateTextView(four4, "T");
+                                helper.updateTextView(four1, "C");
+                                helper.updateTextView(four2, "A");
+                                helper.updateTextView(four3, "R");
+                                helper.updateTextView(four4, "T");
                                 break;
                             case "CHART":
-                                updateTextView(five1, "C");
-                                updateTextView(five2, "H");
-                                updateTextView(six1, "A");
-                                updateTextView(five4, "R");
-                                updateTextView(five5, "T");
+                                helper.updateTextView(five1, "C");
+                                helper.updateTextView(five2, "H");
+                                helper.updateTextView(six1, "A");
+                                helper.updateTextView(five4, "R");
+                                helper.updateTextView(five5, "T");
                                 break;
                             case "ACT":
-                                updateTextView(six1, "A");
-                                updateTextView(six2, "C");
-                                updateTextView(six3, "T");
+                                helper.updateTextView(six1, "A");
+                                helper.updateTextView(six2, "C");
+                                helper.updateTextView(six3, "T");
                                 break;
                         }
                         if (correctAnswerSubmitted == correctWords.length){
-                            complete.start();
-                            timer.cancel();
-                            ScoreFragment scoreFragment = new ScoreFragment();
-                            // Set any data that you want to pass to the fragment using arguments
-                            Bundle args = new Bundle();
-                            args.putInt("score", score);
-                            scoreFragment.setArguments(args);
-                            // Show the fragment using the FragmentManager
-                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                            scoreFragment.show(fragmentManager, "score");
+                            getScoreFragment();
                         }
                     } else {
                         wrong.start();
@@ -232,11 +227,9 @@ public class MediumLevelScreen extends Fragment {
         guessInput.setText(selectedLetters.toString());
     }
 
-    private void updateTextView(TextView textView, String text) {
-        textView.setText(text);
-        textView.setTextSize(15); // set text size to 20sp
-        textView.setGravity(Gravity.CENTER); // center text horizontally and vertical
-        textView.setTypeface(Typeface.DEFAULT_BOLD);
-        textView.setBackgroundResource(R.drawable.correct_border);
+    private void getScoreFragment(){
+        timer.cancel();
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        helper.showScoreFragment(fragmentManager, score);
     }
 }
