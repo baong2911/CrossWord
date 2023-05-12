@@ -230,17 +230,16 @@
 
     <TextView
         android:id="@+id/e_score"
-        android:layout_width="160dp"
+        android:layout_width="170dp"
         android:layout_height="30dp"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="50dp"
         android:fontFamily="serif-monospace"
         android:text="Score: 0"
         android:textColor="@color/white"
         android:textSize="22dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/hintBtn"
-        app:layout_constraintHorizontal_bias="0.4"
-        app:layout_constraintStart_toEndOf="@+id/e_timer"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -325,6 +324,18 @@
         app:layout_constraintStart_toEndOf="@+id/e_S"
         app:layout_constraintTop_toBottomOf="@+id/e_L" />
 
+    <TextView
+        android:id="@+id/noHint"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="52dp"
+        android:fontFamily="serif"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 

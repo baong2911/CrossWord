@@ -1,33 +1,32 @@
 package edu.sjsu.android.crossword;
 
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
 import android.os.CountDownTimer;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 public class MediumLevelScreen extends Fragment {
-
+    HashMap<String, String> letterMap = new HashMap<>();
+    private int numHintsUsed = 0;
+    CrosswordHelper helper;
     private StringBuilder selectedLetters = new StringBuilder();
     Set<String> submittedAnswers = new HashSet<>();
     int correctAnswerSubmitted = 0;
     int score = 0;
-
-    CrosswordHelper helper;
-
     private CountDownTimer timer;
 
     String[] correctWords = {"BATCH", "BRACT", "CHART", "BAT", "CHAT", "CART", "ACT"};
@@ -54,7 +53,7 @@ public class MediumLevelScreen extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_medium_level_screen, container, false);
-
+        pupulateHashMap();
         helper = new CrosswordHelper(getContext());
         final MediaPlayer mp = MediaPlayer.create(getContext(), R.raw.bingo);
         final MediaPlayer complete = MediaPlayer.create(getContext(), R.raw.complete);
@@ -68,11 +67,11 @@ public class MediumLevelScreen extends Fragment {
         TextView letterB = view.findViewById(R.id.m_B);
         TextView guessInput = view.findViewById(R.id.guessInput_m);
         Button submitButton = view.findViewById(R.id.submitBtn_m);
-        TextView e_score = view.findViewById(R.id.m_score);
+        TextView m_score = view.findViewById(R.id.m_score);
         TextView timerTextView = view.findViewById(R.id.m_timer);
         TextView delete = view.findViewById(R.id.delete);
-
-        timer = new CountDownTimer(120000, 1000) {
+        TextView hintButton = view.findViewById(R.id.hintBtn);
+        timer = new CountDownTimer(80000, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 // Update the timer display with the remaining time
@@ -88,6 +87,7 @@ public class MediumLevelScreen extends Fragment {
         };
         timer.start();
 
+        helper = new CrosswordHelper(getContext());
         View.OnClickListener letterClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,6 +127,10 @@ public class MediumLevelScreen extends Fragment {
         TextView six2 = view.findViewById(R.id.m_6_2);
         TextView six3 = view.findViewById(R.id.m_6_3);
 
+        TextView noHint = view.findViewById(R.id.noHint);
+
+        TextView[] textViews = {one1,one2, one3, two1, two2,two4,three1,three2,three3,three4,three5,
+                three6,four1,four2, four3,four4, five1, five2, five4, five5, six1, six2,six3};
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
@@ -136,6 +140,45 @@ public class MediumLevelScreen extends Fragment {
                 }
             }
         });
+
+        hintButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                if (numHintsUsed <3) {
+                    numHintsUsed++;
+                    Random random = new Random();
+                    int randomIndex = random.nextInt(textViews.length);
+                    TextView randomTextView = textViews[randomIndex];
+                    while (!randomTextView.getText().toString().isEmpty()) {
+                        randomIndex = random.nextInt(textViews.length);
+                        randomTextView = textViews[randomIndex];
+                    }
+                    String resourceId = getResources().getResourceEntryName(randomTextView.getId());
+                    String letter = letterMap.get(resourceId);
+                    helper.updateTextView(randomTextView, letter);
+                    score -= 100;
+                    m_score.setText("Score : " + score);
+                    if (isCrosswordLevelComplete()) {
+                        getScoreFragment();
+                    }
+
+                    if (numHintsUsed ==3){
+                        hintButton.setEnabled(false);
+                        helper.setNoHint(noHint);
+                    }
+                }
+            }
+
+            private boolean isCrosswordLevelComplete() {
+                for (TextView textView : textViews) {
+                    if (textView.getText().toString().isEmpty()) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        });
+
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -156,8 +199,8 @@ public class MediumLevelScreen extends Fragment {
                             mp.start();
                         }
                         int remainingTime = Integer.parseInt(timerTextView.getText().toString().substring(6));
-                        score += (remainingTime * 10 + guess.length() * 10);
-                        e_score.setText("Score : " + score);
+                        score += (remainingTime * 20 + guess.length() * 10);
+                        m_score.setText("Score : " + score);
                         switch (correctWords[correctIndex]){
                             case "BAT":
                                 helper.updateTextView(one1, "B");
@@ -182,7 +225,7 @@ public class MediumLevelScreen extends Fragment {
                                 helper.updateTextView(three5, "A");
                                 helper.updateTextView(four4, "T");
                                 helper.updateTextView(five1, "C");
-                                helper.updateTextView(three6, "B");
+                                helper.updateTextView(three6, "H");
                                 break;
                             case "CART":
                                 helper.updateTextView(four1, "C");
@@ -219,6 +262,32 @@ public class MediumLevelScreen extends Fragment {
 
         return view;
     }
+    private void pupulateHashMap() {
+        letterMap.put("m_1_1","B");
+        letterMap.put("m_1_2","A");
+        letterMap.put("m_1_3","T");
+        letterMap.put("m_2_1","C");
+        letterMap.put("m_2_2","H");
+        letterMap.put("m_4_2","A");
+        letterMap.put("m_2_4","T");
+        letterMap.put("m_3_1","B");
+        letterMap.put("m_3_2","R");
+        letterMap.put("m_3_3","A");
+        letterMap.put("m_3_4","C");
+        letterMap.put("m_3_5","A");
+        letterMap.put("m_4_4","T");
+        letterMap.put("m_5_1","C");
+        letterMap.put("m_3_6","H");
+        letterMap.put("m_4_1","C");
+        letterMap.put("m_4_2","A");
+        letterMap.put("m_4_3","R");
+        letterMap.put("m_5_2","H");
+        letterMap.put("m_6_1","A");
+        letterMap.put("m_5_4","R");
+        letterMap.put("m_5_5","T");
+        letterMap.put("m_6_2","C");
+        letterMap.put("m_6_3","T");
+    }
     private void populateGuessInput(TextView guessInput, String letter) {
         // Append the selected letter to the StringBuilder
         selectedLetters.append(letter);
@@ -229,7 +298,10 @@ public class MediumLevelScreen extends Fragment {
 
     private void getScoreFragment(){
         timer.cancel();
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        helper.showScoreFragment(fragmentManager, score);
+        FragmentActivity activity = getActivity();
+        if (activity != null) {
+            FragmentManager fragmentManager = activity.getSupportFragmentManager();
+            helper.showScoreFragment(fragmentManager, score);
+        }
     }
 }

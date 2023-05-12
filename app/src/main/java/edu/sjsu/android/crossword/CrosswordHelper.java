@@ -39,4 +39,9 @@ public class CrosswordHelper {
         // Show the fragment using the FragmentManager
         scoreFragment.show(fragmentManager, "score");
     }
+
+    void setNoHint(TextView textView){
+        textView.setBackgroundResource(R.drawable.letter_border);
+        textView.setText("Out of hint");
+    }
 }

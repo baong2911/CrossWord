@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="300dp"
     android:layout_height="350dp"
-    android:background="@color/teal_700"
+    android:background="@color/level_complete_background"
     tools:context=".ScoreFragment">
 
 
@@ -41,7 +41,7 @@
         android:layout_width="300dp"
         android:layout_height="210dp"
         android:background="@color/white"
-        android:backgroundTint="@color/teal_700"
+        android:backgroundTint="@color/level_complete_background"
         android:src="@drawable/level_complete"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

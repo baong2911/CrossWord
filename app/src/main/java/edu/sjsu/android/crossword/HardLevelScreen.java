@@ -1,31 +1,28 @@
 package edu.sjsu.android.crossword;
 
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
 import android.os.CountDownTimer;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link HardLevelScreen#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class HardLevelScreen extends Fragment {
-
+    HashMap<String, String> letterMap = new HashMap<>();
+    private int numHintsUsed = 0;
+    CrosswordHelper helper;
     private StringBuilder selectedLetters = new StringBuilder();
     Set<String> submittedAnswers = new HashSet<>();
     int correctAnswerSubmitted = 0;
@@ -58,6 +55,7 @@ public class HardLevelScreen extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_hard_level_screen, container, false);
+        pupulateHashMap();
         final MediaPlayer mp = MediaPlayer.create(getContext(), R.raw.bingo);
         final MediaPlayer complete = MediaPlayer.create(getContext(), R.raw.complete);
         final MediaPlayer wrong = MediaPlayer.create(getContext(), R.raw.wrong_answer);
@@ -72,9 +70,10 @@ public class HardLevelScreen extends Fragment {
         TextView letterL = view.findViewById(R.id.h_L);
         TextView guessInput = view.findViewById(R.id.guessInput_h);
         Button submitButton = view.findViewById(R.id.submitBtn_h);
-        TextView e_score = view.findViewById(R.id.h_score);
+        TextView h_score = view.findViewById(R.id.h_score);
         TextView delete = view.findViewById(R.id.delete);
         TextView timerTextView = view.findViewById(R.id.h_timer);
+        TextView hintButton = view.findViewById(R.id.hintBtn);
         timer = new CountDownTimer(120000, 1000) {
 
             public void onTick(long millisUntilFinished) {
@@ -90,7 +89,7 @@ public class HardLevelScreen extends Fragment {
             }
         };
         timer.start();
-
+        helper = new CrosswordHelper(getContext());
         View.OnClickListener letterClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -157,8 +156,55 @@ public class HardLevelScreen extends Fragment {
         TextView nine1 = view.findViewById(R.id.h_9_1);
         TextView nine3 = view.findViewById(R.id.h_9_3);
         TextView nine5 = view.findViewById(R.id.h_9_5);
-        TextView nine6 = view.findViewById(R.id.h_9_6);
-        TextView nine7 = view.findViewById(R.id.h_9_7);
+        TextView nine6 = view.findViewById(R.id.h_9_7);
+        TextView nine7 = view.findViewById(R.id.h_9_6);
+
+        TextView noHint = view.findViewById(R.id.noHint);
+        TextView[] textViews = {one1, one2, one3, one5,
+                one6, two1, two2, two3,two4,two5,three1,
+                three2,three3,three4,three6,four1,four2,
+                four4,four5,five1,five2,five3,five5,six1,
+                six2,six3,six4,seven1,seven2,seven3,seven4,
+                seven5,seven6,eight1,eight2,eight3,eight4,
+                nine1,nine3,nine5,nine6,nine7};
+
+        hintButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                if (numHintsUsed <4) {
+                    numHintsUsed++;
+                    Random random = new Random();
+                    int randomIndex = random.nextInt(textViews.length);
+                    TextView randomTextView = textViews[randomIndex];
+                    while (!randomTextView.getText().toString().isEmpty()) {
+                        randomIndex = random.nextInt(textViews.length);
+                        randomTextView = textViews[randomIndex];
+                    }
+                    String resourceId = getResources().getResourceEntryName(randomTextView.getId());
+                    String letter = letterMap.get(resourceId);
+                    helper.updateTextView(randomTextView, letter);
+                    score -= 100;
+                    h_score.setText("Score : " + score);
+                    if (isCrosswordLevelComplete()) {
+                        getScoreFragment();
+                    }
+
+                    if (numHintsUsed ==4){
+                        hintButton.setEnabled(false);
+                        helper.setNoHint(noHint);
+                    }
+                }
+            }
+
+            private boolean isCrosswordLevelComplete() {
+                for (TextView textView : textViews) {
+                    if (textView.getText().toString().isEmpty()) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        });
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -177,92 +223,83 @@ public class HardLevelScreen extends Fragment {
                     if (correctIndex != -1){
                         mp.start();
                         int remainingTime = Integer.parseInt(timerTextView.getText().toString().substring(6));
-                        score += remainingTime * 10;
-                        e_score.setText("Score : " + score);
+                        score += (remainingTime * 20 + guess.length() * 10);
+                        h_score.setText("Score : " + score);
                         switch (correctWords[correctIndex]){
                             case "ULTRA":
-                                updateTextView(two1, "U");
-                                updateTextView(two2, "L");
-                                updateTextView(two3, "T");
-                                updateTextView(two4, "R");
-                                updateTextView(two5, "A");
+                                helper.updateTextView(two1, "U");
+                                helper.updateTextView(two2, "L");
+                                helper.updateTextView(two3, "T");
+                                helper.updateTextView(two4, "R");
+                                helper.updateTextView(two5, "A");
                                 break;
                             case "LUNATE":
-                                updateTextView(one1, "L");
-                                updateTextView(one2, "U");
-                                updateTextView(one3, "N");
-                                updateTextView(five1, "A");
-                                updateTextView(one5, "T");
-                                updateTextView(one6, "E");
+                                helper.updateTextView(one1, "L");
+                                helper.updateTextView(one2, "U");
+                                helper.updateTextView(one3, "N");
+                                helper.updateTextView(five1, "A");
+                                helper.updateTextView(one5, "T");
+                                helper.updateTextView(one6, "E");
                                 break;
                             case "UNREAL":
-                                updateTextView(three1, "U");
-                                updateTextView(three2, "N");
-                                updateTextView(three3, "R");
-                                updateTextView(three4, "E");
-                                updateTextView(six2, "A");
-                                updateTextView(three6, "L");
+                                helper.updateTextView(three1, "U");
+                                helper.updateTextView(three2, "N");
+                                helper.updateTextView(three3, "R");
+                                helper.updateTextView(three4, "E");
+                                helper.updateTextView(six2, "A");
+                                helper.updateTextView(three6, "L");
                                 break;
                             case "TUNER":
-                                updateTextView(four1, "T");
-                                updateTextView(four2, "U");
-                                updateTextView(three2, "N");
-                                updateTextView(four4, "E");
-                                updateTextView(four5, "R");
+                                helper.updateTextView(four1, "T");
+                                helper.updateTextView(four2, "U");
+                                helper.updateTextView(three2, "N");
+                                helper.updateTextView(four4, "E");
+                                helper.updateTextView(four5, "R");
                                 break;
                             case "ALERT":
-                                updateTextView(five1, "A");
-                                updateTextView(five2, "L");
-                                updateTextView(five3, "E");
-                                updateTextView(two4, "R");
-                                updateTextView(five5, "T");
+                                helper.updateTextView(five1, "A");
+                                helper.updateTextView(five2, "L");
+                                helper.updateTextView(five3, "E");
+                                helper.updateTextView(two4, "R");
+                                helper.updateTextView(five5, "T");
                                 break;
                             case "NATURE":
-                                updateTextView(six1, "N");
-                                updateTextView(six2, "A");
-                                updateTextView(six3, "T");
-                                updateTextView(six4, "U");
-                                updateTextView(seven1, "R");
-                                updateTextView(one6, "E");
+                                helper.updateTextView(six1, "N");
+                                helper.updateTextView(six2, "A");
+                                helper.updateTextView(six3, "T");
+                                helper.updateTextView(six4, "U");
+                                helper.updateTextView(seven1, "R");
+                                helper.updateTextView(one6, "E");
                                 break;
                             case "RENTAL":
-                                updateTextView(seven1, "R");
-                                updateTextView(seven2, "E");
-                                updateTextView(seven3, "N");
-                                updateTextView(seven4, "T");
-                                updateTextView(seven5, "A");
-                                updateTextView(seven6, "L");
+                                helper.updateTextView(seven1, "R");
+                                helper.updateTextView(seven2, "E");
+                                helper.updateTextView(seven3, "N");
+                                helper.updateTextView(seven4, "T");
+                                helper.updateTextView(seven5, "A");
+                                helper.updateTextView(seven6, "L");
                                 break;
                             case "NEAT":
-                                updateTextView(eight1, "N");
-                                updateTextView(eight2, "E");
-                                updateTextView(eight3, "A");
-                                updateTextView(eight4, "T");
+                                helper.updateTextView(eight1, "N");
+                                helper.updateTextView(eight2, "E");
+                                helper.updateTextView(eight3, "A");
+                                helper.updateTextView(eight4, "T");
                                 break;
 
                             case "NEUTRAL":
-                                updateTextView(nine1, "N");
-                                updateTextView(eight2, "E");
-                                updateTextView(nine3, "U");
-                                updateTextView(seven4, "T");
-                                updateTextView(nine5, "R");
-                                updateTextView(nine6, "A");
-                                updateTextView(nine7, "L");
+                                helper.updateTextView(nine1, "N");
+                                helper.updateTextView(eight2, "E");
+                                helper.updateTextView(nine3, "U");
+                                helper.updateTextView(seven4, "T");
+                                helper.updateTextView(nine5, "R");
+                                helper.updateTextView(nine6, "A");
+                                helper.updateTextView(nine7, "L");
                                 break;
 
 
                         }
                         if (correctAnswerSubmitted == correctWords.length){
-                            complete.start();
-                            timer.cancel();
-                            ScoreFragment scoreFragment = new ScoreFragment();
-                            // Set any data that you want to pass to the fragment using arguments
-                            Bundle args = new Bundle();
-                            args.putInt("score", score);
-                            scoreFragment.setArguments(args);
-                            // Show the fragment using the FragmentManager
-                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                            scoreFragment.show(fragmentManager, "score");
+                            getScoreFragment();
                         }
                     } else {
                         wrong.start();
@@ -279,6 +316,51 @@ public class HardLevelScreen extends Fragment {
         return view;
     }
 
+    private void pupulateHashMap() {
+        letterMap.put("h_2_1","U");
+        letterMap.put("h_2_2","L");
+        letterMap.put("h_2_3","T");
+        letterMap.put("h_2_4","R");
+        letterMap.put("h_2_5","A");
+        letterMap.put("h_1_1","L");
+        letterMap.put("h_1_2","U");
+        letterMap.put("h_1_3","N");
+        letterMap.put("h_5_1","A");
+        letterMap.put("h_1_5","T");
+        letterMap.put("h_1_6","E");
+        letterMap.put("h_3_1","U");
+        letterMap.put("h_3_2","N");
+        letterMap.put("h_3_3","R");
+        letterMap.put("h_3_4","E");
+        letterMap.put("h_3_6","L");
+        letterMap.put("h_4_1","T");
+        letterMap.put("h_4_2","U");
+        letterMap.put("h_4_4","E");
+        letterMap.put("h_4_5","R");
+        letterMap.put("h_5_2","L");
+        letterMap.put("h_5_3","E");
+        letterMap.put("h_5_5","T");
+        letterMap.put("h_6_1","N");
+        letterMap.put("h_6_2","A");
+        letterMap.put("h_6_3","T");
+        letterMap.put("h_6_4","U");
+        letterMap.put("h_7_1","R");
+        letterMap.put("h_7_2","E");
+        letterMap.put("h_7_3","N");
+        letterMap.put("h_7_4","T");
+        letterMap.put("h_7_5","A");
+        letterMap.put("h_7_6","L");
+        letterMap.put("h_8_1","N");
+        letterMap.put("h_8_2","E");
+        letterMap.put("h_8_3","A");
+        letterMap.put("h_8_4","T");
+        letterMap.put("h_9_1","N");
+        letterMap.put("h_9_3","U");
+        letterMap.put("h_9_5","R");
+        letterMap.put("h_9_6","L");
+        letterMap.put("h_9_7","A");
+
+    }
     private void populateGuessInput(TextView guessInput, String letter) {
         // Append the selected letter to the StringBuilder
         selectedLetters.append(letter);
@@ -287,11 +369,12 @@ public class HardLevelScreen extends Fragment {
         guessInput.setText(selectedLetters.toString());
     }
 
-    private void updateTextView(TextView textView, String text) {
-        textView.setText(text);
-        textView.setTextSize(15); // set text size to 20sp
-        textView.setGravity(Gravity.CENTER); // center text horizontally and vertical
-        textView.setTypeface(Typeface.DEFAULT_BOLD);
-        textView.setBackgroundResource(R.drawable.correct_border);
+    private void getScoreFragment(){
+        timer.cancel();
+        FragmentActivity activity = getActivity();
+        if (activity != null) {
+            FragmentManager fragmentManager = activity.getSupportFragmentManager();
+            helper.showScoreFragment(fragmentManager, score);
+        }
     }
 }

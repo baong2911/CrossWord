@@ -1,24 +1,18 @@
 package edu.sjsu.android.crossword;
 
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
 import android.os.CountDownTimer;
-import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.GridLayout;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -79,7 +73,7 @@ public class EasyLevelScreen extends Fragment {
         TextView delete = view.findViewById(R.id.delete);
         TextView hintButton = view.findViewById(R.id.hintBtn);
 
-        timer = new CountDownTimer(120000, 1000) {
+        timer = new CountDownTimer(60000, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 // Update the timer display with the remaining time
@@ -133,6 +127,8 @@ public class EasyLevelScreen extends Fragment {
         TextView e5_2 = view.findViewById(R.id.e_5_2);
         TextView e5_3 = view.findViewById(R.id.e_5_3);
 
+        TextView noHint = view.findViewById(R.id.noHint);
+
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
@@ -146,7 +142,7 @@ public class EasyLevelScreen extends Fragment {
         hintButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
-                if (numHintsUsed <3) {
+                if (numHintsUsed <2) {
                     numHintsUsed++;
                     Random random = new Random();
                     int randomIndex = random.nextInt(textViews.length);
@@ -158,12 +154,15 @@ public class EasyLevelScreen extends Fragment {
                     String resourceId = getResources().getResourceEntryName(randomTextView.getId());
                     String letter = letterMap.get(resourceId);
                     helper.updateTextView(randomTextView, letter);
+                    score -=100;
+                    e_score.setText("Score : " + score);
                     if (isCrosswordLevelComplete()) {
                         getScoreFragment();
                     }
 
-                    if (numHintsUsed ==3){
+                    if (numHintsUsed ==2){
                         hintButton.setEnabled(false);
+                        helper.setNoHint(noHint);
                     }
                 }
             }
@@ -262,7 +261,7 @@ public class EasyLevelScreen extends Fragment {
         letterMap.put("e_4_2","U");
         letterMap.put("e_5_1","B");
         letterMap.put("e_5_2","U");
-        letterMap.put("e_5_3","L");
+        letterMap.put("e_5_3","S");
     }
 
     private void populateGuessInput(TextView guessInput, String letter) {
@@ -274,7 +273,10 @@ public class EasyLevelScreen extends Fragment {
 
     private void getScoreFragment(){
         timer.cancel();
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        helper.showScoreFragment(fragmentManager, score);
+        FragmentActivity activity = getActivity();
+        if (activity != null) {
+            FragmentManager fragmentManager = activity.getSupportFragmentManager();
+            helper.showScoreFragment(fragmentManager, score);
+        }
     }
 }

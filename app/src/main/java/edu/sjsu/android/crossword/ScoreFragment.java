@@ -51,6 +51,7 @@ public class ScoreFragment extends DialogFragment {
                 }
             }
         });
+        getDialog().setCancelable(false);
         return view;
     }
 }

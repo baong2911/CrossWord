@@ -129,6 +129,7 @@
             android:layout_row="5"
             android:layout_column="5"
             android:layout_margin="@dimen/cell_margin"
+            android:layout_gravity="center_vertical"
             android:background="@drawable/cell_border" />
 
         <TextView
@@ -138,6 +139,7 @@
             android:layout_row="5"
             android:layout_column="6"
             android:layout_margin="@dimen/cell_margin"
+            android:layout_gravity="center_vertical"
             android:background="@drawable/cell_border"
             android:text="" />
 
@@ -148,6 +150,7 @@
             android:layout_row="5"
             android:layout_column="7"
             android:layout_margin="@dimen/cell_margin"
+            android:layout_gravity="center_vertical"
             android:background="@drawable/cell_border"
             android:text="" />
 
@@ -341,17 +344,16 @@
 
     <TextView
         android:id="@+id/m_score"
-        android:layout_width="160dp"
+        android:layout_width="170dp"
         android:layout_height="30dp"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="50dp"
         android:fontFamily="serif-monospace"
         android:text="Score: 0"
         android:textColor="@color/white"
         android:textSize="22dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/hintBtn"
-        app:layout_constraintHorizontal_bias="0.4"
-        app:layout_constraintStart_toEndOf="@+id/m_timer"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -431,6 +433,19 @@
         android:background="@drawable/delete_foreground"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/m_R" />
+
+    <TextView
+        android:id="@+id/noHint"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="52dp"
+        android:fontFamily="serif"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

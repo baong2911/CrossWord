@@ -29,6 +29,7 @@ public class TimeOutFragment extends DialogFragment {
                         navController.navigate(R.id.action_easyLevelScreen_self);
                     }
                 });
+        setCancelable(false);
         return builder.create();
     }
 }
