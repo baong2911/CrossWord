@@ -30,6 +30,8 @@ public class HardLevelScreen extends Fragment {
 
     private CountDownTimer timer;
 
+    private CrosswordDataManager dbManager;
+
     String[] correctWords = {"UNREAL", "TUNER", "NATURE","LUNATE","ALERT","ULTRA","RENTAL","NEAT","NEUTRAL"};
 
 
@@ -89,6 +91,8 @@ public class HardLevelScreen extends Fragment {
             }
         };
         timer.start();
+
+        dbManager = new CrosswordDataManager(getContext());
         helper = new CrosswordHelper(getContext());
         View.OnClickListener letterClickListener = new View.OnClickListener() {
             @Override
@@ -184,9 +188,20 @@ public class HardLevelScreen extends Fragment {
                     String letter = letterMap.get(resourceId);
                     helper.updateTextView(randomTextView, letter);
                     score -= 100;
-                    h_score.setText("Score : " + score);
+                    h_score.setText("Score: " + score);
                     if (isCrosswordLevelComplete()) {
-                        getScoreFragment();
+                        timer.cancel();
+                        complete.start();
+                        FragmentActivity activity = getActivity();
+                        ScoreFragment scoreFragment = new ScoreFragment();
+                        // Set any data that you want to pass to the fragment using arguments
+                        Bundle args = new Bundle();
+                        args.putInt("score", score);
+                        scoreFragment.setArguments(args);
+                        // Show the fragment using the FragmentManager
+                        FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                        scoreFragment.show(fragmentManager, "score");
+                        dbManager.updateScoreIfHigher(1, "hard", score);
                     }
 
                     if (numHintsUsed ==4){
@@ -222,9 +237,9 @@ public class HardLevelScreen extends Fragment {
 
                     if (correctIndex != -1){
                         mp.start();
-                        int remainingTime = Integer.parseInt(timerTextView.getText().toString().substring(6));
+                        int remainingTime = Integer.parseInt(timerTextView.getText().toString().substring(5));
                         score += (remainingTime * 20 + guess.length() * 10);
-                        h_score.setText("Score : " + score);
+                        h_score.setText("Score: " + score);
                         switch (correctWords[correctIndex]){
                             case "ULTRA":
                                 helper.updateTextView(two1, "U");
@@ -299,7 +314,18 @@ public class HardLevelScreen extends Fragment {
 
                         }
                         if (correctAnswerSubmitted == correctWords.length){
-                            getScoreFragment();
+                            timer.cancel();
+                            complete.start();
+                            FragmentActivity activity = getActivity();
+                            ScoreFragment scoreFragment = new ScoreFragment();
+                            // Set any data that you want to pass to the fragment using arguments
+                            Bundle args = new Bundle();
+                            args.putInt("score", score);
+                            scoreFragment.setArguments(args);
+                            // Show the fragment using the FragmentManager
+                            FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                            scoreFragment.show(fragmentManager, "score");
+                            dbManager.updateScoreIfHigher(1, "hard", score);
                         }
                     } else {
                         wrong.start();
@@ -367,14 +393,5 @@ public class HardLevelScreen extends Fragment {
 
         // Set the text of the guessInput TextView to the current selection
         guessInput.setText(selectedLetters.toString());
-    }
-
-    private void getScoreFragment(){
-        timer.cancel();
-        FragmentActivity activity = getActivity();
-        if (activity != null) {
-            FragmentManager fragmentManager = activity.getSupportFragmentManager();
-            helper.showScoreFragment(fragmentManager, score);
-        }
     }
 }

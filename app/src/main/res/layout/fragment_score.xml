@@ -2,8 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="300dp"
+    android:layout_width="280dp"
     android:layout_height="350dp"
+    android:layout_gravity="center"
     android:background="@color/level_complete_background"
     tools:context=".ScoreFragment">
 
@@ -25,26 +26,27 @@
         android:id="@+id/choice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
         android:background="@color/yellow"
         android:fontFamily="serif-monospace"
         android:text="Choose different level"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:textColor="@color/black"
         android:textSize="20dp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/score_board" />
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="300dp"
-        android:layout_height="210dp"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
         android:background="@color/white"
         android:backgroundTint="@color/level_complete_background"
         android:src="@drawable/level_complete"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -52,12 +54,12 @@
         android:id="@+id/score_board"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="96dp"
         android:fontFamily="sans-serif-smallcaps"
-        android:text="1800"
+        android:text="18000"
         android:textColor="@color/yellow"
         android:textSize="50dp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scoreTextView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

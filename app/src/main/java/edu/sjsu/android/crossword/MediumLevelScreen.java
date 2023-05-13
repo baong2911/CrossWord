@@ -29,6 +29,8 @@ public class MediumLevelScreen extends Fragment {
     int score = 0;
     private CountDownTimer timer;
 
+    private CrosswordDataManager dbManager;
+
     String[] correctWords = {"BATCH", "BRACT", "CHART", "BAT", "CHAT", "CART", "ACT"};
     public MediumLevelScreen() {
         // Required empty public constructor
@@ -87,6 +89,7 @@ public class MediumLevelScreen extends Fragment {
         };
         timer.start();
 
+        dbManager = new CrosswordDataManager(getContext());
         helper = new CrosswordHelper(getContext());
         View.OnClickListener letterClickListener = new View.OnClickListener() {
             @Override
@@ -157,9 +160,20 @@ public class MediumLevelScreen extends Fragment {
                     String letter = letterMap.get(resourceId);
                     helper.updateTextView(randomTextView, letter);
                     score -= 100;
-                    m_score.setText("Score : " + score);
+                    m_score.setText("Score: " + score);
                     if (isCrosswordLevelComplete()) {
-                        getScoreFragment();
+                        timer.cancel();
+                        complete.start();
+                        FragmentActivity activity = getActivity();
+                        ScoreFragment scoreFragment = new ScoreFragment();
+                        // Set any data that you want to pass to the fragment using arguments
+                        Bundle args = new Bundle();
+                        args.putInt("score", score);
+                        scoreFragment.setArguments(args);
+                        // Show the fragment using the FragmentManager
+                        FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                        scoreFragment.show(fragmentManager, "score");
+                        dbManager.updateScoreIfHigher(1, "medium", score);
                     }
 
                     if (numHintsUsed ==3){
@@ -198,9 +212,9 @@ public class MediumLevelScreen extends Fragment {
                         if (correctAnswerSubmitted != correctWords.length){
                             mp.start();
                         }
-                        int remainingTime = Integer.parseInt(timerTextView.getText().toString().substring(6));
+                        int remainingTime = Integer.parseInt(timerTextView.getText().toString().substring(5));
                         score += (remainingTime * 20 + guess.length() * 10);
-                        m_score.setText("Score : " + score);
+                        m_score.setText("Score: " + score);
                         switch (correctWords[correctIndex]){
                             case "BAT":
                                 helper.updateTextView(one1, "B");
@@ -247,7 +261,18 @@ public class MediumLevelScreen extends Fragment {
                                 break;
                         }
                         if (correctAnswerSubmitted == correctWords.length){
-                            getScoreFragment();
+                            timer.cancel();
+                            complete.start();
+                            FragmentActivity activity = getActivity();
+                            ScoreFragment scoreFragment = new ScoreFragment();
+                            // Set any data that you want to pass to the fragment using arguments
+                            Bundle args = new Bundle();
+                            args.putInt("score", score);
+                            scoreFragment.setArguments(args);
+                            // Show the fragment using the FragmentManager
+                            FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                            scoreFragment.show(fragmentManager, "score");
+                            dbManager.updateScoreIfHigher(1, "medium", score);
                         }
                     } else {
                         wrong.start();
@@ -294,14 +319,5 @@ public class MediumLevelScreen extends Fragment {
 
         // Set the text of the guessInput TextView to the current selection
         guessInput.setText(selectedLetters.toString());
-    }
-
-    private void getScoreFragment(){
-        timer.cancel();
-        FragmentActivity activity = getActivity();
-        if (activity != null) {
-            FragmentManager fragmentManager = activity.getSupportFragmentManager();
-            helper.showScoreFragment(fragmentManager, score);
-        }
     }
 }

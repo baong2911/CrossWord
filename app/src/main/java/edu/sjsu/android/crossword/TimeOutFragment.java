@@ -26,7 +26,14 @@ public class TimeOutFragment extends DialogFragment {
                         dismiss();
                         // Navigate to the EasyLevelScreen
                         NavController navController = NavHostFragment.findNavController(TimeOutFragment.this);
-                        navController.navigate(R.id.action_easyLevelScreen_self);
+                        int destinationId = navController.getCurrentDestination().getId();
+                        if (destinationId == R.id.easyLevelScreen){
+                            navController.navigate(R.id.action_easyLevelScreen_self);
+                        } else if (destinationId == R.id.mediumLevelScreen) {
+                            navController.navigate(R.id.action_mediumLevelScreen_self);
+                        } else {
+                            navController.navigate(R.id.action_hardLevelScreen_self);
+                        }
                     }
                 });
         setCancelable(false);

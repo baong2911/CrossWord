@@ -9,23 +9,28 @@ public class CrosswordDatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "crossword.db";
     private static final int DATABASE_VERSION = 1;
 
-    private static final String CREATE_WORDS_TABLE =
-            "CREATE TABLE " + CrosswordDatabaseContract.WordsTable.TABLE_NAME + " (" +
-                    CrosswordDatabaseContract.WordsTable._ID + " INTEGER PRIMARY KEY," +
-                    CrosswordDatabaseContract.WordsTable.COLUMN_NAME_WORD + " TEXT," +
-                    CrosswordDatabaseContract.WordsTable.COLUMN_NAME_CLUE + " TEXT)";
+    private static final String CREATE_TABLE_CROSSWORD_LEVELS =
+            "CREATE TABLE crossword_levels (" +
+                    "id INTEGER PRIMARY KEY," +
+                    "level INTEGER," +
+                    "difficulty TEXT," +
+                    "score INTEGER" +
+                    ");";
 
-    private static final String CREATE_PROGRESS_TABLE =
-            "CREATE TABLE " + CrosswordDatabaseContract.ProgressTable.TABLE_NAME + " (" +
-                    CrosswordDatabaseContract.ProgressTable._ID + " INTEGER PRIMARY KEY," +
-                    CrosswordDatabaseContract.ProgressTable.COLUMN_NAME_WORD_ID + " INTEGER," +
-                    CrosswordDatabaseContract.ProgressTable.COLUMN_NAME_LETTERS_ENTERED + " TEXT)";
+    private static final String CREATE_TABLE_CROSSWORD_WORDS =
+            "CREATE TABLE crossword_words (" +
+                    "id TEXT PRIMARY KEY," +
+                    "level_id INTEGER," +
+                    "word TEXT," +
+                    "description TEXT," +
+                    "FOREIGN KEY(level_id) REFERENCES crossword_levels(id)" +
+                    ");";
 
-    private static final String DROP_WORDS_TABLE =
-            "DROP TABLE IF EXISTS " + CrosswordDatabaseContract.WordsTable.TABLE_NAME;
+    private static final String DROP_CROSSWORD_LEVELS =
+            "DROP TABLE IF EXISTS " + CrosswordDatabaseContract.CrosswordLevels.TABLE_NAME;
 
-    private static final String DROP_PROGRESS_TABLE =
-            "DROP TABLE IF EXISTS " + CrosswordDatabaseContract.ProgressTable.TABLE_NAME;
+    private static final String DROP_CROSSWORD_WORDS =
+            "DROP TABLE IF EXISTS " + CrosswordDatabaseContract.CrosswordWords.TABLE_NAME;
 
     public CrosswordDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -33,42 +38,40 @@ public class CrosswordDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(CREATE_WORDS_TABLE);
-        db.execSQL(CREATE_PROGRESS_TABLE);
+        db.execSQL(CREATE_TABLE_CROSSWORD_LEVELS);
+        db.execSQL(CREATE_TABLE_CROSSWORD_WORDS);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(DROP_WORDS_TABLE);
-        db.execSQL(DROP_PROGRESS_TABLE);
+        db.execSQL(DROP_CROSSWORD_LEVELS);
+        db.execSQL(DROP_CROSSWORD_WORDS);
         onCreate(db);
     }
 
-    public long insertWord(String word, String clue) {
+    public long insertLevel(int level, String difficulty) {
         SQLiteDatabase db = getWritableDatabase();
+
         ContentValues values = new ContentValues();
-        values.put(CrosswordDatabaseContract.WordsTable.COLUMN_NAME_WORD, word);
-        values.put(CrosswordDatabaseContract.WordsTable.COLUMN_NAME_CLUE, clue);
-        long newRowId = db.insert(CrosswordDatabaseContract.WordsTable.TABLE_NAME, null, values);
-        return newRowId;
+        values.put("level", level);
+        values.put("difficulty", difficulty);
+        values.put("score", 0);
+
+        long levelId = db.insert("crossword_levels", null, values);
+        return levelId;
     }
 
-    public int updateWord(int wordId, String word, String clue) {
+    public long insertWord(String id, long levelId, String word, String description) {
         SQLiteDatabase db = getWritableDatabase();
+
         ContentValues values = new ContentValues();
-        values.put(CrosswordDatabaseContract.WordsTable.COLUMN_NAME_WORD, word);
-        values.put(CrosswordDatabaseContract.WordsTable.COLUMN_NAME_CLUE, clue);
-        String selection = CrosswordDatabaseContract.WordsTable._ID + " = ?";
-        String[] selectionArgs = { String.valueOf(wordId) };
-        int count = db.update(CrosswordDatabaseContract.WordsTable.TABLE_NAME, values, selection, selectionArgs);
-        return count;
+        values.put("id", id);
+        values.put("level_id", levelId);
+        values.put("word", word);
+        values.put("description", description);
+
+        long num = db.insert("crossword_words", null, values);
+        return num;
     }
 
-    public int deleteWord(int wordId) {
-        SQLiteDatabase db = getWritableDatabase();
-        String selection = CrosswordDatabaseContract.WordsTable._ID + " = ?";
-        String[] selectionArgs = { String.valueOf(wordId) };
-        int count = db.delete(CrosswordDatabaseContract.WordsTable.TABLE_NAME, selection, selectionArgs);
-        return count;
-    }
 }

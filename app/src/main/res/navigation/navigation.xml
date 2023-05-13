@@ -46,6 +46,9 @@
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right"
             app:destination="@id/levelSelection" />
+        <action
+            android:id="@+id/action_mediumLevelScreen_self"
+            app:destination="@id/mediumLevelScreen" />
     </fragment>
     <fragment
         android:id="@+id/easyLevelScreen"
@@ -73,6 +76,9 @@
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right"
             app:destination="@id/levelSelection" />
+        <action
+            android:id="@+id/action_hardLevelScreen_self"
+            app:destination="@id/hardLevelScreen" />
     </fragment>
     <fragment
         android:id="@+id/scoreFragment"

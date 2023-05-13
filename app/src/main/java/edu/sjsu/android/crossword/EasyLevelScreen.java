@@ -32,6 +32,8 @@ public class EasyLevelScreen extends Fragment {
 
     private CountDownTimer timer;
 
+    private CrosswordDataManager dbManager;
+
     String[] correctWords = {"BLUR", "BURL", "SLUR", "RUB", "BUS"};
 
     public EasyLevelScreen() {
@@ -61,6 +63,7 @@ public class EasyLevelScreen extends Fragment {
         final MediaPlayer mp = MediaPlayer.create(getContext(), R.raw.bingo);
         final MediaPlayer wrong = MediaPlayer.create(getContext(), R.raw.wrong_answer);
         final MediaPlayer contain = MediaPlayer.create(getContext(), R.raw.error_sound);
+        final MediaPlayer complete = MediaPlayer.create(getContext(), R.raw.complete);
         TextView letterR = view.findViewById(R.id.e_R);
         TextView letterU = view.findViewById(R.id.e_U);
         TextView letterL = view.findViewById(R.id.e_L);
@@ -90,6 +93,7 @@ public class EasyLevelScreen extends Fragment {
         timer.start();
 
         helper = new CrosswordHelper(getContext());
+        dbManager = new CrosswordDataManager(getContext());
         View.OnClickListener letterClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,12 +107,6 @@ public class EasyLevelScreen extends Fragment {
         letterL.setOnClickListener(letterClickListener);
         letterB.setOnClickListener(letterClickListener);
         letterS.setOnClickListener(letterClickListener);
-
-        TextView[] textViews = { view.findViewById(R.id.e_2_1), view.findViewById(R.id.e_2_2), view.findViewById(R.id.e_1_2),
-                view.findViewById(R.id.e_2_4), view.findViewById(R.id.e_1_1), view.findViewById(R.id.e_1_3),
-                view.findViewById(R.id.e_3_1), view.findViewById(R.id.e_3_2), view.findViewById(R.id.e_3_3),
-                view.findViewById(R.id.e_4_1), view.findViewById(R.id.e_4_2), view.findViewById(R.id.e_5_1),
-                view.findViewById(R.id.e_5_2), view.findViewById(R.id.e_5_3) };
 
         TextView e2_1 = view.findViewById(R.id.e_2_1);
 
@@ -126,6 +124,9 @@ public class EasyLevelScreen extends Fragment {
         TextView e5_1 = view.findViewById(R.id.e_5_1);
         TextView e5_2 = view.findViewById(R.id.e_5_2);
         TextView e5_3 = view.findViewById(R.id.e_5_3);
+
+        TextView[] textViews = { e2_1, e2_2, e1_2, e2_4, e1_1, e1_3, e3_1, e3_2, e3_3,
+                e4_1, e4_2, e5_1, e5_2, e5_3 };
 
         TextView noHint = view.findViewById(R.id.noHint);
 
@@ -155,9 +156,20 @@ public class EasyLevelScreen extends Fragment {
                     String letter = letterMap.get(resourceId);
                     helper.updateTextView(randomTextView, letter);
                     score -=100;
-                    e_score.setText("Score : " + score);
+                    e_score.setText("Score: " + score);
                     if (isCrosswordLevelComplete()) {
-                        getScoreFragment();
+                        timer.cancel();
+                        complete.start();
+                        FragmentActivity activity = getActivity();
+                        ScoreFragment scoreFragment = new ScoreFragment();
+                        // Set any data that you want to pass to the fragment using arguments
+                        Bundle args = new Bundle();
+                        args.putInt("score", score);
+                        scoreFragment.setArguments(args);
+                        // Show the fragment using the FragmentManager
+                        FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                        scoreFragment.show(fragmentManager, "score");
+                        dbManager.updateScoreIfHigher(1, "easy", score);
                     }
 
                     if (numHintsUsed ==2){
@@ -196,7 +208,7 @@ public class EasyLevelScreen extends Fragment {
                         if (correctAnswerSubmitted != correctWords.length){
                             mp.start();
                         }
-                        int remainingTime = Integer.parseInt(timerTextView.getText().toString().substring(6));
+                        int remainingTime = Integer.parseInt(timerTextView.getText().toString().substring(5));
                         score += (remainingTime * 20 + guess.length() * 10);
                         e_score.setText("Score: " + score);
                         switch (correctWords[correctIndex]){
@@ -231,7 +243,18 @@ public class EasyLevelScreen extends Fragment {
 
                         }
                         if (correctAnswerSubmitted == correctWords.length){
-                            getScoreFragment();
+                            timer.cancel();
+                            complete.start();
+                            FragmentActivity activity = getActivity();
+                            ScoreFragment scoreFragment = new ScoreFragment();
+                            // Set any data that you want to pass to the fragment using arguments
+                            Bundle args = new Bundle();
+                            args.putInt("score", score);
+                            scoreFragment.setArguments(args);
+                            // Show the fragment using the FragmentManager
+                            FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                            scoreFragment.show(fragmentManager, "score");
+                            dbManager.updateScoreIfHigher(1, "easy", score);
                         }
                     } else {
                         wrong.start();
@@ -269,14 +292,5 @@ public class EasyLevelScreen extends Fragment {
         selectedLetters.append(letter);
         // Set the text of the guessInput TextView to the current selection
         guessInput.setText(selectedLetters.toString());
-    }
-
-    private void getScoreFragment(){
-        timer.cancel();
-        FragmentActivity activity = getActivity();
-        if (activity != null) {
-            FragmentManager fragmentManager = activity.getSupportFragmentManager();
-            helper.showScoreFragment(fragmentManager, score);
-        }
     }
 }
