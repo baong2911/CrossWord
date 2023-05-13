@@ -1,5 +1,6 @@
 package edu.sjsu.android.crossword;
 
+import android.app.Activity;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 
@@ -12,6 +13,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class ScoreFragment extends DialogFragment {
@@ -33,6 +35,7 @@ public class ScoreFragment extends DialogFragment {
         // Display the score in the layout
         TextView scoreTextView = view.findViewById(R.id.score_board);
         TextView choice = view.findViewById(R.id.choice);
+        ImageView exit = view.findViewById(R.id.exit);
         scoreTextView.setText(String.valueOf(score));
         // Set the NavController for the TextView
         choice.setOnClickListener(new View.OnClickListener() {
@@ -52,6 +55,17 @@ public class ScoreFragment extends DialogFragment {
             }
         });
         getDialog().setCancelable(false);
+
+        exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Activity activity = getActivity();
+                if (activity != null) {
+                    mp.start();
+                    activity.finish();
+                }
+            }
+        });
         return view;
     }
 }
