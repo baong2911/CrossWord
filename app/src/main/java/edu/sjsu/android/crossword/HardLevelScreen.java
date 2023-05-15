@@ -193,15 +193,17 @@ public class HardLevelScreen extends Fragment {
                         timer.cancel();
                         complete.start();
                         FragmentActivity activity = getActivity();
-                        ScoreFragment scoreFragment = new ScoreFragment();
-                        // Set any data that you want to pass to the fragment using arguments
-                        Bundle args = new Bundle();
-                        args.putInt("score", score);
-                        scoreFragment.setArguments(args);
-                        // Show the fragment using the FragmentManager
-                        FragmentManager fragmentManager = activity.getSupportFragmentManager();
-                        scoreFragment.show(fragmentManager, "score");
-                        dbManager.updateScoreIfHigher(1, "hard", score);
+                        if (activity != null) {
+                            ScoreFragment scoreFragment = new ScoreFragment();
+                            // Set any data that you want to pass to the fragment using arguments
+                            Bundle args = new Bundle();
+                            args.putInt("score", score);
+                            scoreFragment.setArguments(args);
+                            // Show the fragment using the FragmentManager
+                            FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                            scoreFragment.show(fragmentManager, "score");
+                            dbManager.updateScoreIfHigher(1, "hard", score);
+                        }
                     }
 
                     if (numHintsUsed ==4){
@@ -317,15 +319,17 @@ public class HardLevelScreen extends Fragment {
                             timer.cancel();
                             complete.start();
                             FragmentActivity activity = getActivity();
-                            ScoreFragment scoreFragment = new ScoreFragment();
-                            // Set any data that you want to pass to the fragment using arguments
-                            Bundle args = new Bundle();
-                            args.putInt("score", score);
-                            scoreFragment.setArguments(args);
-                            // Show the fragment using the FragmentManager
-                            FragmentManager fragmentManager = activity.getSupportFragmentManager();
-                            scoreFragment.show(fragmentManager, "score");
-                            dbManager.updateScoreIfHigher(1, "hard", score);
+                            if (activity != null) {
+                                ScoreFragment scoreFragment = new ScoreFragment();
+                                // Set any data that you want to pass to the fragment using arguments
+                                Bundle args = new Bundle();
+                                args.putInt("score", score);
+                                scoreFragment.setArguments(args);
+                                // Show the fragment using the FragmentManager
+                                FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                                scoreFragment.show(fragmentManager, "score");
+                                dbManager.updateScoreIfHigher(1, "hard", score);
+                            }
                         }
                     } else {
                         wrong.start();
