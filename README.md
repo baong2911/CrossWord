@@ -9,6 +9,7 @@ Our backlog tasks can be found in the `Crossword Backlog.pdf`file of this reposi
 ## Final Report
 
 **App name:** Crossword
+
 **Group members:**
 
  - Huu Ho
